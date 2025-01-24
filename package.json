@@ -17,8 +17,10 @@
   "description": "",
   "dependencies": {
     "@prisma/client": "^6.2.1",
+    "@types/cors": "^2.8.17",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "dotnet": "^1.1.4",
     "ejs": "^3.1.10",
     "express": "^4.21.2",

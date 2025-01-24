@@ -11,3 +11,7 @@ body {
   font-style: normal;
   font-size: large;
 }
+
+main {
+  margin-top: 5px;
+}

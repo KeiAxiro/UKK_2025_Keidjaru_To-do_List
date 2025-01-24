@@ -5,6 +5,6 @@ const router = Router();
 
 router.get("/", homeController);
 router.get("/lorem", (req: Request, res: Response) => {
-  res.render("lorem");
+  res.render("contents/lorem");
 });
 export default router;

@@ -11,19 +11,19 @@
     <link rel="stylesheet" href="stylesheets/style.css" />
   </head>
 
-  <body class="">
-    <div id="app">
-      <header>
+  <body class="background">
+    <div x-data="{ isMenuOpen: false }">
+      <header class="fixed surface">
         <!-- place navbar here -->
         <%- include('components/navbar_top') %>
       </header>
+      <progress
+        id="indicator-bar"
+        class="no-margin no-round htmx-indicator"
+      ></progress>
       <%- include('components/navbar_leftside') %>
 
-      <main>
-        <div class="as"></div>
-
-        <button hx-get="" hx-target="as">odading</button>
-      </main>
+      <main><%- include(vContent) %></main>
     </div>
     <%- include('libs/scripts') %>
   </body>

@@ -1,13 +1,18 @@
 <nav>
-  <button
-    class="circle transparent ripple"
-    @click="toggleMainMenu"
+  <a
+    @click="isMenuOpen = !isMenuOpen"
+    class="circle ripple transparent"
     id="burger-main-menu"
   >
-    <i id="lists-icon">{{ listsIconContent }}</i>
-    <div class="tooltip bottom no-space">Main Menu</div>
-  </button>
-  <div class="max"></div>
+    <i
+      class="transparent"
+      :class="isMenuOpen ? 'primary' : ''"
+      x-text="isMenuOpen ? 'menu_open' : 'menu'"
+    ></i>
+    <div class="tooltip bottom">Tooltip</div>
+  </a>
+
+  <h6 class="max">To-do List</h6>
   <button class="circle transparent">
     <i>attach_file</i>
   </button>
@@ -18,4 +23,3 @@
     <i>more_vert</i>
   </button>
 </nav>
-<progress></progress>
