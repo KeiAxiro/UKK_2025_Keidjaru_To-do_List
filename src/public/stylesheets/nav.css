@@ -1,0 +1,30 @@
+#burger-main-menu {
+  font-size: 24px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  margin-left: 1rem;
+}
+
+#nav-main-menu {
+  position: fixed;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  height: 90vh;
+  width: 0;
+
+  margin-left: 1vh;
+
+  transition: width 0.1s ease, opacity 0.2s ease, visibility 0s 0.2s; /* Add delay for visibility */
+}
+
+#nav-main-menu.active {
+  opacity: 1;
+  visibility: visible;
+  width: 30vh;
+  transition: width 0.1s ease, opacity 0.2s ease;
+}
+
+#nav-main-menu:hover {
+}
