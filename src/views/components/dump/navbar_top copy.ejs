@@ -1,0 +1,157 @@
+<nav
+  class="navbar navbar-expand-md bg-body-tertiary fixed-top border-bottom border-1"
+>
+  <div class="container-lg">
+    <span
+      class="bi bi-list-task p-0 px-3"
+      id=""
+      alt="main menu"
+      style="font-size: 30px"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapse-nav-main-menu"
+      aria-expanded="true"
+      aria-controls="collapse-nav-main-menu"
+    ></span>
+
+    <a class="navbar-brand" href="/"
+      ><img src="/images/logo.png" class="mx-2" width="40px" /><span
+        style="color: blue"
+        >K</span
+      >Shop</a
+    >
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/produk">Product</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About Us</a>
+        </li>
+      </ul>
+      <form class="d-flex me-md-2" role="search">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success d-md-none" type="submit">
+          Search
+        </button>
+      </form>
+      <hr class="d-md-none" />
+
+      <% if (true) { %>
+      <!-- <div class="mt-md-0 me-2">
+            <a class="nav-link d-flex gap-1" href="/cart"><span class="material-symbols-outlined">shopping_cart</span>
+              <span>Cart</span></a>
+          </div> -->
+      <div class="mt-2 mt-md-1">
+        <div class="dropdown">
+          <a
+            class="nav-link d-flex gap-1 align-items-center dropdown-toggle"
+            type="button"
+            id="triggerId"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <span class="mb-md-0">
+              <img
+                class="ms-2 rounded-circle border border-black"
+                src="/images/logo.png"
+                width="40px"
+                alt=""
+              />
+            </span>
+            <span> <%= "konsefsfetfofl" %> </span>
+          </a>
+          <div
+            class="dropdown-menu dropdown-menu-start dropdown-menu-md-end p-2"
+            aria-labelledby="triggerId"
+          >
+            <div class="p-1">
+              <span class="fs-5"> <%= "user.nama" %> </span>
+              <span class="fs-6 text-body-secondary">
+                <%= "user.email" %>
+              </span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a
+              class="nav-link d-flex align-items-center dropdown-item"
+              href="/profile"
+            >
+              <span class="material-symbols-outlined">manage_accounts</span>
+              <span class="ms-2">Profile</span>
+            </a>
+            <% if ( "ADMIN"==="ADMIN" ) { %>
+
+            <a
+              class="nav-link d-flex align-items-center mt-1 dropdown-item"
+              href="/admin"
+            >
+              <span class="material-symbols-outlined"
+                >admin_panel_settings</span
+              >
+              <span class="ms-2">Admin Dashboard</span>
+            </a>
+            <% } else {%>
+            <a
+              class="nav-link d-flex align-items-center mt-1 dropdown-item"
+              href="/cart"
+            >
+              <span class="material-symbols-outlined">shopping_cart</span>
+              <span class="ms-2">Cart</span>
+            </a>
+            <% } %>
+            <div class="dropdown-divider"></div>
+            <a
+              class="nav-link d-flex align-items-center dropdown-item"
+              href="/api/auth/logout"
+            >
+              <span class="material-symbols-outlined">logout</span>
+              <span class="ms-2">Logout</span>
+            </a>
+          </div>
+        </div>
+
+        <% } else { %>
+        <div
+          class="btn-group border-0"
+          role="group"
+          aria-label="Basic mixed styles example"
+        >
+          <a
+            id="login"
+            type="button"
+            class="btn btn-outline-info border-0 text-black"
+            href="/login"
+            style="height: 2.2rem"
+            >Login</a
+          >
+          <a
+            type="button"
+            class="btn btn-success border-0"
+            href="/register"
+            style="height: 2.2rem"
+            >Register</a
+          >
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</nav>
