@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "main": "src/bin/server.ts",
   "scripts": {
-    "build": "tsc && prisma migrate deploy",
+    "postinstall": "prisma generate",
+    "prisma:migrate": "prisma migrate deploy",
+    "build": "tsc",
     "start": "ts-node src/bin/server.ts",
     "dev": "ts-node-dev --respawn ./src/bin/server.ts",
     "start:bun": "bun src/bin/server.ts",
     "dev:bun": "bun run --watch ./src/bin/server.ts",
-    "postinstall": "prisma generate",
     "seeder": "bun ./src/prisma/seeders/index.ts"
   },
   "keywords": [],
