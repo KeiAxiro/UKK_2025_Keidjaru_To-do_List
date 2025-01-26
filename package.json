@@ -1,15 +1,13 @@
 {
   "name": "ukk_2025_keidjaru_to-do_list",
   "version": "1.0.0",
-  "main": "src/bin/server.ts",
+  "main": "dist/bin/server.js",
   "scripts": {
     "postinstall": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",
     "build": "tsc",
-    "start": "ts-node src/bin/server.ts",
-    "dev": "ts-node-dev --respawn ./src/bin/server.ts",
-    "start:bun": "bun src/bin/server.ts",
-    "dev:bun": "bun run --watch ./src/bin/server.ts",
+    "start": "node dist/bin/server.js",
+    "dev": "bun run --watch ./src/bin/server.js",
     "seeder": "bun ./src/prisma/seeders/index.ts"
   },
   "keywords": [],
@@ -19,7 +17,6 @@
   "dependencies": {
     "@prisma/client": "^6.2.1",
     "@types/axios": "^0.14.4",
-    "@types/cors": "^2.8.17",
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
@@ -27,17 +24,16 @@
     "dotnet": "^1.1.4",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
-    "install": "^0.13.0",
     "morgan": "^1.10.0",
     "prisma": "^6.2.1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.0",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.10.10",
-    "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   }
 }
