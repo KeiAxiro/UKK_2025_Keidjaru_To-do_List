@@ -1,27 +1,49 @@
-<article
-  class="nav-main-menu surface-bright no-padding tiny-padding"
+<nav
+  class="drawer surface-bright small-round"
+  x-bind:class="isMenuOpen ? 'active' : ''"
+  x-transition:enter="transition-all duration-500 ease-in-out"
+  x-transition:leave="transition-all duration-500 ease-in-out"
   id="nav-main-menu"
-  :class="isMenuOpen ? 'active' : ''"
 >
-  <button
-    class="extra top-margin"
-    hx-get="/lorem"
-    hx-trigger="click"
-    hx-target="#res"
-    hx-swap="outerHTML"
-    hx-indicator="#indicator-bar"
-  >
-    <i>add</i>
-    <span>Button</span>
+  <header>
+    <nav>
+      <img class="circle" src="/images/logo.png" />
+      <h6 class="max">Title</h6>
+      <button class="transparent circle large">
+        <i>close</i>
+      </button>
+    </nav>
+  </header>
+  <button class="circle small blue"></button>
+  <button @click="theme('#ff00ff')">
+    <i>inbox</i>
+    <span class="max">Inbox</span>
+    <b>24</b>
   </button>
-
-  <div class="small-margin"></div>
-
-  <% for( let index = 0; index < 6; index++ ) { %>
-
-  <button class="responsive left-align small transparent">
-    <i>task_alt</i>
-    <span>Button</span>
-  </button>
-  <% } %>
-</article>
+  <a hx-get="/lorem" hx-target="#res" hx-indicator="#indicator-bar">
+    <i>send</i>
+    <span>Outbox</span>
+  </a>
+  <a hx-get="/api/njir" hx-target="#res" hx-indicator="#indicator-bar">
+    <i>favorite</i>
+    <span>favorities</span>
+  </a>
+  <a>
+    <i>delete</i>
+    <span>Trash</span>
+  </a>
+  <hr />
+  <label>Labels</label>
+  <a>
+    <i>fiber_manual_record</i>
+    <span>Label</span>
+  </a>
+  <a>
+    <i>change_history</i>
+    <span>Label</span>
+  </a>
+  <a>
+    <i>stop</i>
+    <span>Label</span>
+  </a>
+</nav>

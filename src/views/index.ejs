@@ -6,24 +6,43 @@
     <meta charset="utf-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no"
     />
+    <link
+      rel="preload"
+      href="/libs/UcCO3FwrK3iLTeHuS_nVMrMxCp50qjIw2boKoduKmMEVuI6fMZg.ttf"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      onload="this.rel='stylesheet'"
+    />
+
     <link rel="stylesheet" href="stylesheets/style.css" />
   </head>
 
   <body class="background">
-    <div x-data="{ isMenuOpen: false }">
-      <header class="fixed surface">
+    <div
+      x-data="{ isMenuOpen: false , isMoreOpen: false}"
+      @click.away="isMenuOpen= false"
+    >
+      <header class="surface fixed">
         <!-- place navbar here -->
-        <%- include('components/navbar_top') %>
+        <%- include('components/navbar_top') %> <%-
+        include('components/loading') %>
       </header>
       <progress
         id="indicator-bar"
         class="no-margin no-round htmx-indicator"
       ></progress>
-      <%- include('components/navbar_leftside') %>
+      <div class="all-container surface fixed">
+        <!-- Navbar -->
+        <%- include('components/navbar_leftside') %>
 
-      <main><%- include(vContent) %></main>
+        <!-- Konten Utama -->
+        <main @click="isMenuOpen = false" :class="isMenuOpen ? 'active' : ''">
+          <%- include(vContent) %>
+        </main>
+      </div>
     </div>
     <%- include('libs/scripts') %>
   </body>

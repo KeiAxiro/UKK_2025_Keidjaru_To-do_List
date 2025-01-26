@@ -1,27 +1,9 @@
-// document.addEventListener("DOMContentLoaded", function () {
-//   new Vue({
-//     el: "#app",
-//     data: {
-//       isMenuOpen: false,
-//     },
-//     computed: {
-//       // Properti yang akan mengubah ikon sesuai status menu
-//       listsIconContent() {
-//         return this.isMenuOpen ? "menu_open" : "menu"; // Ganti "menu" dengan isi awal ikon
-//       },
-//     },
-//     methods: {
-//       toggleMainMenu() {
-//         this.isMenuOpen = !this.isMenuOpen;
-//       },
-//     },
-//   });
-// });
-
 const indicatorBar = document.getElementById("indicator-bar");
+const containerLoading = document.getElementById("container-loading");
 
-window.onload = function () {
-  indicatorBar.style.display = "none";
+onload = function () {
+  indicatorBar.style.display = "hidden";
+  containerLoading.style.display = "none";
 };
 
 document.body.addEventListener("htmx:configRequest", (event) => {
@@ -35,3 +17,12 @@ document.body.addEventListener("htmx:afterRequest", (event) => {
 document.body.addEventListener("htmx:responseError", (event) => {
   console.error("HTMX Response Error:", event.detail);
 });
+
+const theme = async (from) => {
+  await ui("theme", from);
+};
+
+const mode = () => {
+  let newMode = ui("mode") == "dark" ? "light" : "dark";
+  ui("mode", newMode);
+};

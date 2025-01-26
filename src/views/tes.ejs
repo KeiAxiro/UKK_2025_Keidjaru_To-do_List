@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="stylesheets/style.css" />
+  </head>
+
+  <body class="background">
+    <div x-data="{ isMenuOpen: false }">
+      <header class="fixed surface">
+        <!-- place navbar here -->
+        <%- include('components/navbar_top') %>
+      </header>
+      <progress
+        id="indicator-bar"
+        class="no-margin no-round htmx-indicator"
+      ></progress>
+
+      <nav
+        class="left drawer"
+        id="nav-main-menu"
+        :class="isMenuOpen ? 'active' : ''"
+      >
+        <a>
+          <i>home</i>
+          <div>Home</div>
+        </a>
+        <a>
+          <i>search</i>
+          <div>Search</div>
+        </a>
+        <a>
+          <i>share</i>
+          <div>share</div>
+        </a>
+      </nav>
+      <main class="responsive"></main>
+    </div>
+    <%- include('libs/scripts') %>
+  </body>
+</html>

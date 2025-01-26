@@ -1,7 +1,7 @@
 <nav>
-  <a
+  <button
     @click="isMenuOpen = !isMenuOpen"
-    class="circle ripple transparent"
+    class="circle fast-ripple transparent"
     id="burger-main-menu"
   >
     <i
@@ -9,8 +9,8 @@
       :class="isMenuOpen ? 'primary' : ''"
       x-text="isMenuOpen ? 'menu_open' : 'menu'"
     ></i>
-    <div class="tooltip bottom">Tooltip</div>
-  </a>
+    <div class="tooltip bottom">Main Menu</div>
+  </button>
 
   <h6 class="max">To-do List</h6>
   <button class="circle transparent">
@@ -19,7 +19,12 @@
   <button class="circle transparent">
     <i>today</i>
   </button>
-  <button class="circle transparent">
+  <button class="circle transparent" @click="isMoreOpen = true">
     <i>more_vert</i>
+    <menu id="menu-more" class="left no-wrap large" x-show="isMoreOpen">
+      <h6 class="small-padding">Item 1</h6>
+      <a>Item 2</a>
+      <a>Item 3</a>
+    </menu>
   </button>
 </nav>
