@@ -1,0 +1,37 @@
+<div id="auth-container" class="">
+  <div id="login-container">
+    <h5>To-do List</h5>
+    <article id="login-form" class="large-padding">
+      <h6>Login</h6>
+      <form action="/api/auth/login" method="post">
+        <div class="field label border">
+          <input name="userNameEmail" type="text" autofocus />
+          <label class="grey-text">Username or Email</label>
+          <span class="helper grey-text"
+            >KeiAxiro or KeiAxiro_23@gmail.com</span
+          >
+        </div>
+        <div class="field label border">
+          <input name="userPassword" type="password" />
+          <label class="grey-text">Password</label>
+          <a class="helper">Forgot Password?</a>
+        </div>
+        <div class="tiny-padding middle-align" style="height: 10vh">
+          <label class="checkbox">
+            <input type="checkbox" />
+            <span>Remember Me</span>
+          </label>
+          <button
+            type="submit"
+            class="small-round large large-text absolute right"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+      <div id="footer-auth" class="middle-align center-align large-text">
+        Do not have an account? <a class="link tiny-padding">Create one</a>
+      </div>
+    </article>
+  </div>
+</div>

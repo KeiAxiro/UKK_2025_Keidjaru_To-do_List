@@ -1,3 +1,6 @@
 .tooltip {
+  font-size: small;
   z-index: 1080;
+  transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-delay: 0.3s;
 }

@@ -1,0 +1,24 @@
+#auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  top: 0;
+  left: 0;
+}
+
+#login-form {
+  width: 45vh;
+  height: fit-content;
+}
+
+#login-form .field {
+  margin-top: 3.4vh;
+}
+
+@media (max-width: 768px) {
+  #login-form {
+    width: calc(100%);
+    height: fit-content;
+  }
+}

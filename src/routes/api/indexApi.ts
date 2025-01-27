@@ -1,7 +1,11 @@
 import axios from "axios";
 import { Router, Request, Response } from "express";
 
+import authRouter from "./auth/indexAuth.js";
+
 const router = Router();
+
+router.use("/auth", authRouter);
 
 router.get("/njir", async (req: Request, res: Response) => {
   try {

@@ -1,3 +1,6 @@
+#header-top {
+  border-bottom: 1px solid var(--outline-variant);
+}
 #burger-main-menu {
   font-size: 24px;
   cursor: pointer;

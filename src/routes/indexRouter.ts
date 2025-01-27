@@ -1,10 +1,13 @@
 import { Router, Request, Response } from "express";
 import { homeController } from "../controllers/home.controller.js";
-import { responseEncoding } from "axios";
+import { loginController } from "../controllers/auth.controller.js";
 
 const router = Router();
 
 router.get("/", homeController);
+
+router.get("/login", loginController);
+
 router.get("/lorem", (req: Request, res: Response) => {
   res.render("contents/lorem");
 });

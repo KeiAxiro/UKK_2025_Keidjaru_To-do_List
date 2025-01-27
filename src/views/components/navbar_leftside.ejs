@@ -1,33 +1,29 @@
 <nav
   class="drawer surface-bright small-round"
   x-bind:class="isMenuOpen ? 'active' : ''"
-  x-transition:enter="transition-all duration-500 ease-in-out"
-  x-transition:leave="transition-all duration-500 ease-in-out"
   id="nav-main-menu"
 >
   <header>
     <nav>
-      <img class="circle" src="/images/logo.png" />
-      <h6 class="max">Title</h6>
+      <h6 class="max">Main Menu</h6>
       <button class="transparent circle large">
         <i>close</i>
       </button>
     </nav>
   </header>
-  <button class="circle small blue"></button>
   <button @click="theme('#ff00ff')">
     <i>inbox</i>
     <span class="max">Inbox</span>
     <b>24</b>
   </button>
-  <a hx-get="/lorem" hx-target="#res" hx-indicator="#indicator-bar">
+  <button hx-get="/lorem" hx-target="#res" hx-indicator="#indicator-bar">
     <i>send</i>
     <span>Outbox</span>
-  </a>
-  <a hx-get="/api/njir" hx-target="#res" hx-indicator="#indicator-bar">
+  </button>
+  <button hx-get="/api/njir" hx-target="#res" hx-indicator="#indicator-bar">
     <i>favorite</i>
     <span>favorities</span>
-  </a>
+  </button>
   <a>
     <i>delete</i>
     <span>Trash</span>
