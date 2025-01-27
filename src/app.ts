@@ -8,6 +8,12 @@ const PORT = 3000;
 import apiRouter from "./routes/api/indexApi.js";
 import indexRouter from "./routes/indexRouter.js";
 
+// Middleware untuk parsing URL-encoded data
+app.use(express.urlencoded({ extended: true }));
+
+// Middleware untuk parsing JSON (jika ada permintaan dalam JSON format)
+app.use(express.json());
+
 // Morgan
 app.use(morgan("dev"));
 
