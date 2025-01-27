@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
-import { homeController } from "../controllers/home.controller";
+import { homeController } from "../controllers/home.controller.js";
+import { responseEncoding } from "axios";
 
 const router = Router();
 

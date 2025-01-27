@@ -1,5 +1,4 @@
-import { Prisma } from "@prisma/client";
-import prisma from "../clients/indexPrisma";
+import prisma from "../clients/indexPrisma.js";
 import bcrypt from "bcrypt";
 
 async function main(): Promise<void> {

@@ -1,8 +1,6 @@
-const indicatorBar = document.getElementById("indicator-bar");
 const containerLoading = document.getElementById("container-loading");
 
 onload = function () {
-  indicatorBar.style.display = "hidden";
   containerLoading.style.display = "none";
 };
 

@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "CommonJS",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "esModuleInterop": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "module": "Node16", // Gunakan Node16 Modules
+    "moduleResolution": "Node16", // Resolusi modul sesuai Node.js v16+
+    "target": "ES2020", // Target JavaScript modern
+    "rootDir": "./src", // Direktori utama
+    "outDir": "./dist", // Direktori hasil kompilasi
+    "strict": true, // Aktifkan strict mode
+    "esModuleInterop": true, // Mempermudah impor modul CommonJS
+    "allowSyntheticDefaultImports": true // Mendukung import default untuk CommonJS
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
