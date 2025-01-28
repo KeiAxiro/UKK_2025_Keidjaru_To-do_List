@@ -1,19 +1,8 @@
-import { Router, Response, Request } from "express";
+import { Router, Response, Request, NextFunction } from "express";
+import { loginAuth } from "../../../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.get("/a", (req: Request, res: Response) => {
-  console.log("asas");
-  res.json({
-    as: "asas",
-  });
-});
-
-router.post("/login", (req: Request, res: Response) => {
-  {
-    const { userNameEmail, userPassword } = req.body || {};
-    res.json({ userNameEmail, userPassword });
-  }
-});
+router.post("/login", loginAuth);
 
 export default router;
