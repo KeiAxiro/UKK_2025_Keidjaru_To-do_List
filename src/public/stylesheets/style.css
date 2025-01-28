@@ -31,7 +31,7 @@ body {
   grid-template-rows: auto; /* Ukuran dinamis berdasarkan konten */
   height: 100vh;
   width: 100%;
-  transition: transform 500ms ease;
+  transition: transform 200ms ease;
 }
 
 main {
@@ -39,12 +39,12 @@ main {
   width: 100%;
   position: relative;
   padding: 1rem;
-  transition: transform 280ms ease, width 500ms ease;
+  transition: transform 280ms ease, width 200ms ease;
 }
 
 main.active {
-  width: calc(100% - 32vh);
-  transform: translateX(32vh);
+  width: calc(100% - 30rem);
+  transform: translateX(30rem);
 }
 
 progress {

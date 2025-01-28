@@ -24,3 +24,7 @@ const mode = () => {
   let newMode = ui("mode") == "dark" ? "light" : "dark";
   ui("mode", newMode);
 };
+
+document.querySelectorAll("i").forEach((el) => {
+  el.setAttribute("translate", "no");
+});
