@@ -7,7 +7,8 @@
     "dev": "bun --watch run ./src/app.ts",
     "dev:node": "nodemon",
     "build": "tsc && ncp src/views dist/views && ncp src/public dist/public",
-    "start": "node dist/app.js"
+    "start": "node dist/app.js",
+    "seeder": "bun run ./src/prisma/seeders/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,11 +16,14 @@
   "description": "",
   "dependencies": {
     "@prisma/client": "^6.2.1",
+    "@types/jsonwebtoken": "^9.0.8",
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "eslint": "^9.19.0",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "ncp": "^2.0.0",
     "prisma": "^6.2.1"
