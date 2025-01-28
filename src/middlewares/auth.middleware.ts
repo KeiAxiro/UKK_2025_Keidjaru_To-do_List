@@ -16,14 +16,9 @@ export const loginAuth = async (req: Request, res: Response) => {
     });
 
     if (!user || !(await bcrypt.compare(userPassword, user.password))) {
-      // setAlertMessage(
-      //   res,
-      //   "Login Failed",
-      //   "Invalid username or password.",
-      //   "error"
-      // );
       console.log("invalid username or password");
-      res.redirect("/login");
+
+      res.render("auth/login");
       return;
     }
 
@@ -53,11 +48,11 @@ export const loginAuth = async (req: Request, res: Response) => {
     //     `Welcome back, ${user.nama}!`,
     //     "success"
     //   );
-    res.redirect("/");
+    res.render("contents/home.ejs");
     return;
   } catch (error) {
     //   setAlertMessage(res, "Login Failed!", `Error: ${error.message}`, "error");
-    res.redirect("/login");
+    res.json("asas");
   }
 };
 
@@ -66,7 +61,7 @@ export const logoutAuth = (req: Request, res: Response) => {
 
   res.clearCookie("token"); // Remove token cookie
   // setAlertMessage(res, "Logout Successful!", "Have a nice day ^_^", "success");
-  res.redirect("/login");
+  res.json("asas");
 };
 
 export const authenticateJWT = (requiredRole: string) => {
