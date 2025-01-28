@@ -5,41 +5,56 @@
 >
   <header>
     <nav>
-      <h6 class="max">Main Menu</h6>
-      <button class="transparent circle large">
+      <h6 class="max" translate="no">Main Menu</h6>
+      <button @click="isMenuOpen = false" class="transparent circle large">
         <i>close</i>
       </button>
     </nav>
+    <article class="no-margin">
+      <div class="row">
+        <img class="circle large" src="/images/logo.png" />
+        <div class="max">
+          <h5>Title</h5>
+          <p>Some text here</p>
+        </div>
+      </div>
+      <nav>
+        <button>Button</button>
+      </nav>
+    </article>
   </header>
-  <button @click="theme('#ff00ff')">
-    <i>inbox</i>
-    <span class="max">Inbox</span>
-    <b>24</b>
-  </button>
-  <button hx-get="/lorem" hx-target="#res" hx-indicator="#indicator-bar">
-    <i>send</i>
-    <span>Outbox</span>
-  </button>
-  <button hx-get="/api/njir" hx-target="#res" hx-indicator="#indicator-bar">
-    <i>favorite</i>
-    <span>favorities</span>
-  </button>
-  <a>
-    <i>delete</i>
-    <span>Trash</span>
-  </a>
-  <hr />
-  <label>Labels</label>
-  <a>
-    <i>fiber_manual_record</i>
-    <span>Label</span>
-  </a>
-  <a>
-    <i>change_history</i>
-    <span>Label</span>
-  </a>
-  <a>
-    <i>stop</i>
-    <span>Label</span>
-  </a>
+  <nav class="drawer no-padding" id="nav-main-content">
+    <a class="primary" @click="theme('#ff00ff')">
+      <i>inbox</i>
+
+      <span class="max" aria-label="Inbox">Inbox</span>
+      <b>24</b>
+    </a>
+    <a hx-get="/lorem" hx-target="#res" hx-indicator="#indicator-bar">
+      <i>send</i>
+      <span>Outbox</span>
+    </a>
+    <a hx-get="/api/njir" hx-target="#res" hx-indicator="#indicator-bar">
+      <i>favorite</i>
+      <span>favorities</span>
+    </a>
+    <a>
+      <i>delete</i>
+      <span>Trash</span>
+    </a>
+    <hr />
+    <label>Labels</label>
+    <a>
+      <i>fiber_manual_record</i>
+      <span>Label</span>
+    </a>
+    <a>
+      <i>change_history</i>
+      <span>Label</span>
+    </a>
+    <a>
+      <i>stop</i>
+      <span>Label</span>
+    </a>
+  </nav>
 </nav>

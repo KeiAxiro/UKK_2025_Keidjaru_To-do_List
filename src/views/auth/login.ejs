@@ -3,18 +3,21 @@
     <h5>To-do List</h5>
     <article id="login-form" class="large-padding">
       <h6>Login</h6>
-      <form action="/api/auth/login" method="post">
+      <!-- <form action="/api/auth/login" method="post"> -->
+      <form hx-post="/api/auth/login" hx-target="#res">
         <div class="field label border">
           <input name="userNameEmail" type="text" autofocus />
           <label class="grey-text">Username or Email</label>
-          <span class="helper grey-text"
+          <span class="helper login grey-text"
             >KeiAxiro or KeiAxiro_23@gmail.com</span
           >
         </div>
         <div class="field label border">
           <input name="userPassword" type="password" />
           <label class="grey-text">Password</label>
-          <a class="helper">Forgot Password?</a>
+          <span class="helper login"
+            ><a class="link" href="">Forgot Password?</a></span
+          >
         </div>
         <div class="tiny-padding middle-align" style="height: 10vh">
           <label class="checkbox">
