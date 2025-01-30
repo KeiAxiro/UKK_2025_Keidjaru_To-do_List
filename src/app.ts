@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import path from "path";
+import cookieParser from "cookie-parser";
 import morgan from "morgan";
 
 const app: Application = express();
@@ -16,6 +17,9 @@ app.use(express.json());
 
 // Morgan
 app.use(morgan("dev"));
+
+//kuki
+app.use(cookieParser());
 
 // Set EJS as the view engine
 app.set("view engine", "ejs");
