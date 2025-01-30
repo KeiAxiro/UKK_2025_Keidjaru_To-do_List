@@ -23,7 +23,7 @@
       </nav>
     </article>
   </header>
-  <nav class="drawer no-padding" id="nav-main-content">
+  <nav class="drawer no-padding top-margin" id="nav-main-content">
     <a class="primary" @click="theme('#ff00ff')">
       <i>inbox</i>
 
@@ -52,9 +52,12 @@
       <i>change_history</i>
       <span>Label</span>
     </a>
+    <% for( let i = 0; i < 120; i++ ) { %>
+
     <a>
       <i>stop</i>
       <span>Label</span>
     </a>
+    <% } %>
   </nav>
 </nav>

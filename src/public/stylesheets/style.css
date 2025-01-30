@@ -43,8 +43,8 @@ main {
 }
 
 main.active {
-  width: calc(100% - 30rem);
-  transform: translateX(30rem);
+  width: calc(100% - calc(21rem + 5vw));
+  transform: translateX(calc(21rem + 5vw));
 }
 
 progress {

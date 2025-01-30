@@ -12,8 +12,8 @@
   overflow: hidden;
   visibility: hidden;
   opacity: 0;
-  height: 90vh;
-  width: 30rem; /* Ukuran tetap untuk menu navigasi */
+  height: 90%;
+  width: calc(20rem + 5vw); /* Ukuran tetap untuk menu navigasi */
   margin-left: 1em;
   margin-top: 0.8em;
   transform: translateX(-100%);
@@ -30,12 +30,13 @@
 
 #nav-main-content {
   width: 100%;
-  /* padding-left: 0px; */
+  height: 60vh;
+  overflow: auto;
 }
 
 @media (max-width: 768px) {
   #nav-main-menu {
-    height: 85vh;
+    height: 90%;
     width: 70vw;
   }
 }
