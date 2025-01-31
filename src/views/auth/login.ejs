@@ -4,7 +4,7 @@
     <article id="login-form" class="large-padding">
       <h6>Login</h6>
       <!-- <form action="/api/auth/login" method="post"> -->
-      <form hx-post="/api/auth/login" hx-target="#res">
+      <form hx-post="/api/auth/login" hx-target="#snackbars">
         <div class="field label border">
           <input name="userNameEmail" type="text" autofocus />
           <label class="grey-text">Username or Email</label>
@@ -33,7 +33,8 @@
         </div>
       </form>
       <div id="footer-auth" class="middle-align center-align large-text">
-        Do not have an account? <a class="link tiny-padding">Create one</a>
+        Do not have an account?
+        <a href="/register" class="link tiny-padding">Create one</a>
       </div>
     </article>
   </div>
