@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import dotenv from "dotenv";
 
 const app: Application = express();
 const PORT = 3000;
@@ -17,6 +18,9 @@ app.use(express.json());
 
 // Morgan
 app.use(morgan("dev"));
+
+//dotenv
+require("dotenv").config();
 
 //kuki
 app.use(cookieParser());

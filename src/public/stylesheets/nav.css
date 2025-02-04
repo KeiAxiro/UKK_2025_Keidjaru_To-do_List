@@ -30,8 +30,12 @@
 
 #nav-main-content {
   width: 100%;
-  height: 60vh;
+  height: 72vh;
   overflow: auto;
+}
+
+#menu-more {
+  width: 20rem;
 }
 
 @media (max-width: 768px) {

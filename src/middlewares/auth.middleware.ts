@@ -50,9 +50,11 @@ export const loginAuth = async (req: Request, res: Response) => {
     //   );
     res.render("contents/home.ejs");
     return;
-  } catch (error) {
+  } catch (err) {
     //   setAlertMessage(res, "Login Failed!", `Error: ${error.message}`, "error");
-    res.json("asas");
+    if (err instanceof Error) {
+      res.json(err.message);
+    }
   }
 };
 
