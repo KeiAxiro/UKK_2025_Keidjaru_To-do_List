@@ -1,4 +1,5 @@
 import express, { Application, Request, Response } from "express";
+import session from "express-session";
 import path from "path";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
@@ -16,6 +17,16 @@ import indexRouter from "./routes/indexRouter.js";
 
 // Middleware untuk parsing URL-encoded data
 app.use(express.urlencoded({ extended: true }));
+//kuki
+app.use(cookieParser());
+app.use(
+  session({
+    secret: "supersecretkey",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  })
+);
 
 // Middleware untuk parsing JSON (jika ada permintaan dalam JSON format)
 app.use(express.json());
@@ -25,9 +36,6 @@ app.use(morgan("dev"));
 
 //dotenv
 import("dotenv");
-
-//kuki
-app.use(cookieParser());
 
 // Set EJS as the view engine
 app.set("view engine", "ejs");

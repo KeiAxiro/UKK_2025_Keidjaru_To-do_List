@@ -1,1 +1,12 @@
-<div class="snackbar error top active">Some text here</div>
+<% if (snackbar) { %>
+<div
+  x-data="{ snackbarShow: <%= snackbar.active %> }"
+  x-init="setTimeout(() => snackbarShow = false, 3000)"
+  @click="snackbarShow = false"
+  x-transition
+  class="snackbar top <%= snackbar.type %>"
+  x-bind:class="snackbarShow ? 'active' : ''"
+>
+  <%= snackbar.message %>
+</div>
+<% } %>

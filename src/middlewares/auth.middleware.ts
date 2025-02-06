@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import prisma from "../prisma/clients/indexPrisma.js";
+import { snackbar } from "./snackbars.middleware.js";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -18,7 +19,9 @@ export const loginAuth = async (req: Request, res: Response) => {
     if (!user || !(await bcrypt.compare(userPassword, user.password))) {
       console.log("invalid username or password");
 
-      res.render("auth/login");
+      res.render("components/snackbars", {
+        snackbar: snackbar("Invalid username", "error"),
+      });
       return;
     }
 
@@ -48,7 +51,9 @@ export const loginAuth = async (req: Request, res: Response) => {
     //     `Welcome back, ${user.nama}!`,
     //     "success"
     //   );
-    res.render("contents/home.ejs");
+    res.render("components/snackbars", {
+      snackbar: snackbar("Login Successfull!", "primary"),
+    });
     return;
   } catch (err) {
     //   setAlertMessage(res, "Login Failed!", `Error: ${error.message}`, "error");

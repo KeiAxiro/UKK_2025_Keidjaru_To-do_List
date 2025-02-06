@@ -4,16 +4,22 @@
     <article id="login-form" class="large-padding">
       <h6>Login</h6>
       <!-- <form action="/api/auth/login" method="post"> -->
-      <form hx-post="/api/auth/login" hx-target="#snackbars">
+      <form
+        class="needs-validation"
+        hx-post="/api/auth/login"
+        hx-target="#snackbars"
+        hx-swap="innerHTML"
+        novalidate=""
+      >
         <div class="field label border">
-          <input name="userNameEmail" type="text" autofocus />
+          <input name="userNameEmail" type="text" autofocus required />
           <label class="grey-text">Username or Email</label>
           <span class="helper login grey-text"
             >KeiAxiro or KeiAxiro_23@gmail.com</span
           >
         </div>
         <div class="field label border">
-          <input name="userPassword" type="password" />
+          <input name="userPassword" type="password" required />
           <label class="grey-text">Password</label>
           <span class="helper login"
             ><a class="link" href="">Forgot Password?</a></span
