@@ -52,7 +52,7 @@ export const loginAuth = async (req: Request, res: Response) => {
     //     "success"
     //   );
     res.render("components/snackbars", {
-      snackbar: snackbar("Login Successfull!", "primary"),
+      snackbar: snackbar(`Login Successfull!`, "primary"),
     });
     return;
   } catch (err) {
@@ -68,7 +68,9 @@ export const logoutAuth = (req: Request, res: Response) => {
 
   res.clearCookie("token"); // Remove token cookie
   // setAlertMessage(res, "Logout Successful!", "Have a nice day ^_^", "success");
-  res.json("asas");
+  res.render("snackbar", {
+    snackbar: snackbar(`Logout Successful!`, "secondary"),
+  });
 };
 
 export const authenticateJWT = (requiredRole: string) => {
