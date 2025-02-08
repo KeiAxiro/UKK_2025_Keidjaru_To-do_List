@@ -19,9 +19,11 @@ export const loginAuth = async (req: Request, res: Response) => {
     if (!user || !(await bcrypt.compare(userPassword, user.password))) {
       console.log("invalid username or password");
 
-      res.render("components/snackbars", {
-        snackbar: snackbar("Invalid username", "error"),
-      });
+      (req.session as any).snackbar = snackbar(
+        `Invalid Username Or Password!`,
+        "error"
+      );
+      res.redirect("/login");
       return;
     }
 
@@ -51,9 +53,13 @@ export const loginAuth = async (req: Request, res: Response) => {
     //     `Welcome back, ${user.nama}!`,
     //     "success"
     //   );
-    res.render("components/snackbars", {
-      snackbar: snackbar(`Login Successfull!`, "primary"),
-    });
+    // res.render("components/snackbars", {
+    //   snackbar: snackbar(`Login Successfull!`, "primary"),
+    // });
+
+    (req.session as any).snackbar = snackbar(`Login Successfull!`, "primary");
+
+    res.redirect("/");
     return;
   } catch (err) {
     //   setAlertMessage(res, "Login Failed!", `Error: ${error.message}`, "error");
@@ -68,22 +74,20 @@ export const logoutAuth = (req: Request, res: Response) => {
 
   res.clearCookie("token"); // Remove token cookie
   // setAlertMessage(res, "Logout Successful!", "Have a nice day ^_^", "success");
-  res.render("snackbar", {
-    snackbar: snackbar(`Logout Successful!`, "secondary"),
-  });
+
+  (req.session as any).snackbar = snackbar(`Logout Successful!`, "secondary");
+  res.redirect("/login");
 };
 
 export const authenticateJWT = (requiredRole: string) => {
-  (req: Request, res: Response, next: NextFunction) => {
-    const token = req.cookies.token; // Retrieve token from cookie
+  return async (req: Request, res: Response, next: NextFunction) => {
+    const token = req.cookies.token; // Ambil token dari cookie
 
-    // If requiredRole is "ALL", only check for token if it exists
     if (requiredRole === "ALL") {
       if (!token) {
-        return next(); // Proceed without verification
+        return next(); // Lanjutkan tanpa verifikasi
       }
     } else {
-      // For other roles, token is required
       if (!token) {
         return res
           .status(403)
@@ -91,7 +95,6 @@ export const authenticateJWT = (requiredRole: string) => {
       }
     }
 
-    // Verify token using jwt.verify
     jwt.verify(token, JWT_SECRET, (err: any, user: any) => {
       if (err) {
         return res.status(403).json({ message: "Invalid token." });
@@ -99,7 +102,6 @@ export const authenticateJWT = (requiredRole: string) => {
 
       (req as any).user = user;
 
-      // Check if user has the required role
       if (
         requiredRole &&
         requiredRole !== "ALL" &&
@@ -110,8 +112,7 @@ export const authenticateJWT = (requiredRole: string) => {
           .json({ message: "Access denied. Insufficient role." });
       }
 
-      next(); // If all validations pass, proceed to the next handler
+      next(); // Jika lolos semua validasi, lanjutkan
     });
   };
-  return;
 };

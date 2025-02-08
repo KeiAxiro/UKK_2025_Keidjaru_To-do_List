@@ -1,10 +1,16 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, RequestHandler } from "express";
 import { homeController } from "../controllers/home.controller.js";
 import { loginController } from "../controllers/auth.controller.js";
+import { authenticateJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
+router.get(
+  "/",
+  authenticateJWT("ALL") as unknown as RequestHandler,
+  homeController
+);
 
-router.get("/", homeController);
+router.get("/login", loginController);
 
 router.get("/login", loginController);
 

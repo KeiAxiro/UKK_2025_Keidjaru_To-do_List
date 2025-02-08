@@ -12,13 +12,16 @@
     <div class="tooltip bottom left-margin" translate="no">Main Menu</div>
   </a>
 
-  <h6 class="max" translate="no">To-do List</h6>
-  <button class="circle transparent">
-    <i>attach_file</i>
-  </button>
+  <h6 class="max" translate="no">
+    <a class="secondary-text" href="/"
+      ><span class="primary-text bold">Quick</span>List</a
+    >
+  </h6>
+
   <button class="circle transparent">
     <i>today</i>
   </button>
+  <% if (user) { %>
   <button class="circle transparent" @click="isMoreOpen = true">
     <img class="responsive" src="/images/logo.png" />
   </button>
@@ -32,15 +35,22 @@
     <div class="row">
       <img class="circle large" src="/images/logo.png" />
       <div class="max">
-        <h6>Keidjaru Axiro asas</h6>
-        <span>keidjaru@gmail.com</span>
+        <h6><%= user.nama %></h6>
+        <span><%= user.email %></span>
       </div>
     </div>
     <nav class="top-margin">
-      <button>
-        <i>home</i>
-        <span>Button</span>
-      </button>
+      <a href="/api/auth/logout">
+        <button>
+          <i>logout</i>
+          <span>Logout</span>
+        </button>
+      </a>
     </nav>
   </menu>
+  <% }else{ %>
+  <a class="no-margin link" href="/login">
+    <button><i>login</i>Login</button>
+  </a>
+  <% } %>
 </nav>

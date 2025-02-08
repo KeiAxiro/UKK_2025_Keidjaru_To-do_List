@@ -20,11 +20,11 @@
     <link rel="stylesheet" href="stylesheets/style.css" />
   </head>
 
-  <div id="snackbars"></div>
+  <div id="snackbars"><%- include('components/snackbars') %></div>
 
   <body class="background">
     <div
-      x-data="{ isMenuOpen: false , isMoreOpen: false}"
+      x-data="{ isMenuOpen: false , isMoreOpen: false, isLoginOpen: false}"
       @click.away="isMenuOpen= false"
     >
       <header class="surface fixed" id="header-top">

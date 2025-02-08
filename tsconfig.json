@@ -8,12 +8,15 @@
     "strict": true, // Aktifkan strict mode
     "esModuleInterop": true, // Mempermudah impor modul CommonJS
     "allowSyntheticDefaultImports": true, // Mendukung import default untuk CommonJS
-    "noImplicitReturns": false
+    "noImplicitReturns": false,
+    "strictFunctionTypes": false,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noUnusedLocals": false,
+    "typeRoots": ["./node_modules/@types", "./@types"]
   },
-  "include": [
-    "src/**/*",
-    "src/public/libs/beer.min.js",
-    "src/public/libs/material-dynamic-colors.min.js"
-  ],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }

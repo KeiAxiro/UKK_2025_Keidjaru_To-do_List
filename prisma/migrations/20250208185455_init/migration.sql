@@ -7,9 +7,9 @@ CREATE TYPE "RoleUser" AS ENUM ('ADMIN', 'USER');
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "username" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
+    "username" VARCHAR(50) NOT NULL,
+    "email" VARCHAR(100) NOT NULL,
+    "password" VARCHAR(255) NOT NULL,
     "role" "RoleUser" NOT NULL DEFAULT 'USER',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -21,7 +21,8 @@ CREATE TABLE "User" (
 CREATE TABLE "List" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "name" VARCHAR(100) NOT NULL,
+    "description" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -32,11 +33,11 @@ CREATE TABLE "List" (
 CREATE TABLE "Task" (
     "id" TEXT NOT NULL,
     "listId" TEXT NOT NULL,
-    "title" TEXT NOT NULL,
+    "title" VARCHAR(150) NOT NULL,
     "description" TEXT,
     "priority" "Priority" NOT NULL DEFAULT 'MEDIUM',
     "isCompleted" BOOLEAN NOT NULL DEFAULT false,
-    "dueDate" TIMESTAMP(3),
+    "dueDate" TIMESTAMPTZ,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -47,7 +48,7 @@ CREATE TABLE "Task" (
 CREATE TABLE "Subtask" (
     "id" TEXT NOT NULL,
     "taskId" TEXT NOT NULL,
-    "title" TEXT NOT NULL,
+    "title" VARCHAR(150) NOT NULL,
     "isCompleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -59,7 +60,8 @@ CREATE TABLE "Subtask" (
 CREATE TABLE "Tag" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "name" VARCHAR(50) NOT NULL,
+    "description" TEXT,
 
     CONSTRAINT "Tag_pkey" PRIMARY KEY ("id")
 );
@@ -77,6 +79,15 @@ CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE INDEX "Task_isCompleted_idx" ON "Task"("isCompleted");
+
+-- CreateIndex
+CREATE INDEX "Task_dueDate_idx" ON "Task"("dueDate");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Tag_userId_name_key" ON "Tag"("userId", "name");
 
 -- AddForeignKey
 ALTER TABLE "List" ADD CONSTRAINT "List_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

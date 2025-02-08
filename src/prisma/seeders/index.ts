@@ -5,7 +5,7 @@ async function main(): Promise<void> {
   console.time("time: ");
   try {
     const existingUser = await prisma.user.findUnique({
-      where: { email: "test1@test.com" },
+      where: { email: "kei@kei.com" },
     });
 
     if (existingUser) {
@@ -13,8 +13,8 @@ async function main(): Promise<void> {
     } else {
       await prisma.user.create({
         data: {
-          username: "kei1",
-          email: "test1@test.com",
+          username: "kei",
+          email: "kei@kei.com",
           password: bcrypt.hashSync("kei", 10),
         },
       });
