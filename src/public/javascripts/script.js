@@ -1,30 +1,27 @@
-const containerLoading = document.getElementById("container-loading");
-
-onload = function () {
-  containerLoading.style.display = "none";
-};
-
-document.body.addEventListener("htmx:configRequest", (event) => {
-  console.log("HTMX Request Configured:", event.detail.errors);
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("container-loading").style.display = "none";
 });
 
-document.body.addEventListener("htmx:afterRequest", (event) => {
-  console.log("HTMX Request Completed:", event.detail);
+const logHTMXEvent = (type, detail) =>
+  console[type](`HTMX ${type.replace("htmx:", "")}:`, detail);
+
+["configRequest", "afterRequest", "responseError"].forEach((event) => {
+  document.body.addEventListener(`htmx:${event}`, (e) =>
+    logHTMXEvent(event === "responseError" ? "error" : "log", e.detail)
+  );
 });
 
-document.body.addEventListener("htmx:responseError", (event) => {
-  console.error("HTMX Response Error:", event.detail);
-});
+const theme = (from) => ui("theme", from);
 
-const theme = async (from) => {
-  await ui("theme", from);
-};
+const mode = (from) => ui("mode", from);
 
-const mode = () => {
-  let newMode = ui("mode") == "dark" ? "light" : "dark";
-  ui("mode", newMode);
-};
+document
+  .querySelectorAll("i")
+  .forEach((el) => el.setAttribute("translate", "no"));
 
-document.querySelectorAll("i").forEach((el) => {
-  el.setAttribute("translate", "no");
+document.addEventListener("DOMContentLoaded", function () {
+  if (!localStorage.getItem("translatePrompted")) {
+    localStorage.setItem("translatePrompted", "true");
+    window.location.reload(); // Refresh agar Chrome mendeteksi bahasa
+  }
 });

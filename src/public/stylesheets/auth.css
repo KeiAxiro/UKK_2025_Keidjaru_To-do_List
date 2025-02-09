@@ -8,16 +8,31 @@
 }
 
 #login-form {
-  width: 32rem;
+  width: 34rem;
   height: fit-content;
+  transition: width 250ms ease;
 }
 
 #login-form .field {
-  margin-top: 3.2vh;
+  margin-bottom: 4vh;
+}
+
+#reg-form {
+  width: 34rem;
+  height: fit-content;
+  transition: width 250ms ease;
+}
+
+#reg-form .field {
+  margin-bottom: 4vh;
 }
 
 @media (max-width: 768px) {
   #login-form {
+    width: calc(100%);
+    height: fit-content;
+  }
+  #reg-form {
     width: calc(100%);
     height: fit-content;
   }
