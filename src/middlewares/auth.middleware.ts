@@ -1,8 +1,14 @@
-import { Request, Response, NextFunction } from "express";
+import {
+  Request,
+  Response,
+  NextFunction,
+  ErrorRequestHandler,
+  RequestHandler,
+} from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import prisma from "../prisma/clients/indexPrisma.js";
-import { snackbar } from "./snackbars.middleware.js";
+import { setSnackbar, snackbar } from "./snackbars.middleware.js";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -19,10 +25,7 @@ export const loginAuth = async (req: Request, res: Response) => {
     if (!user || !(await bcrypt.compare(userPassword, user.password))) {
       console.log("invalid username or password");
 
-      (req.session as any).snackbar = snackbar(
-        `Invalid Username Or Password!`,
-        "error"
-      );
+      setSnackbar(req, `Invalid username or password`, "error");
       res.redirect("/login");
       return;
     }
@@ -47,25 +50,71 @@ export const loginAuth = async (req: Request, res: Response) => {
       });
     }
 
-    //   setAlertMessage(
-    //     res,
-    //     "Login Successful!",
-    //     `Welcome back, ${user.nama}!`,
-    //     "success"
-    //   );
-    // res.render("components/snackbars", {
-    //   snackbar: snackbar(`Login Successfull!`, "primary"),
-    // });
-
-    (req.session as any).snackbar = snackbar(`Login Successfull!`, "primary");
+    setSnackbar(req, `Login Successfully!`, "primary");
 
     res.redirect("/");
     return;
   } catch (err) {
-    //   setAlertMessage(res, "Login Failed!", `Error: ${error.message}`, "error");
     if (err instanceof Error) {
       res.json(err.message);
     }
+  }
+};
+
+export const registerAuth = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { userName, userEmail, userPassword, userConfirmPassword } = req.body;
+  console.log(userName, userEmail, userPassword, userConfirmPassword);
+  const regUser = {
+    userName,
+    userEmail,
+    userPassword,
+    userConfirmPassword,
+  };
+  (req.session as any).user = regUser;
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail)) {
+    setSnackbar(req, `Invalid email format: ${userEmail}`, "error");
+    (req.session as any).snackbar = snackbar(`Invalid email format!`, "error");
+    res.redirect("/register");
+    return;
+  }
+  if (userPassword !== userConfirmPassword) {
+    (req.session as any).snackbar = snackbar(
+      `Passwords do not match!`,
+      "error"
+    );
+    res.redirect("/register");
+    return;
+  }
+
+  try {
+    const hashPassword = await bcrypt.hash(userConfirmPassword, 10);
+    await prisma.user.create({
+      data: {
+        username: userName,
+        email: userEmail,
+        password: hashPassword,
+      },
+    });
+    (req.session as any).snackbar = snackbar(
+      `User created successfully`,
+      "green"
+    );
+    res.redirect("/login");
+  } catch (error: any) {
+    if (error.code === "P2002") {
+      (req.session as any).snackbar = snackbar(
+        `Account already exists`,
+        "error"
+      );
+      return res.redirect("/register");
+    }
+    (req.session as any).snackbar = snackbar(`Error: ${error}`, "error");
+    res.redirect("/register");
   }
 };
 
@@ -73,7 +122,6 @@ export const logoutAuth = (req: Request, res: Response) => {
   console.log("remember_email: " + req.cookies.remember_email);
 
   res.clearCookie("token"); // Remove token cookie
-  // setAlertMessage(res, "Logout Successful!", "Have a nice day ^_^", "success");
 
   (req.session as any).snackbar = snackbar(`Logout Successful!`, "secondary");
   res.redirect("/login");

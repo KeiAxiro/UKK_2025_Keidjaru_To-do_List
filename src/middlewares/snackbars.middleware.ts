@@ -9,3 +9,12 @@ export const snackbar = (
   type,
   active,
 });
+
+export const setSnackbar = (
+  req: Request,
+  message: string,
+  type: string,
+  active: boolean = true
+) => {
+  (req.session as any).snackbar = { message, type, active };
+};
