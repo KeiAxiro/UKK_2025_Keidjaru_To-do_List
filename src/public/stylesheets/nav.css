@@ -13,7 +13,7 @@
   visibility: hidden;
   opacity: 0;
   height: 90%;
-  width: calc(20rem + 5vw); /* Ukuran tetap untuk menu navigasi */
+  width: calc(16rem + 5vw); /* Ukuran tetap untuk menu navigasi */
   margin-left: 1em;
   margin-top: 0.8em;
   transform: translateX(-100%);

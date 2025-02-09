@@ -1,1 +1,72 @@
-asasasas asas
+
+  <div id="tasks-container">
+    <% for (let i = 0; i <= 12; i++) { %>
+      <article x-data="{dragIndicator: false}" class="task-card" >
+          <nav class="task-header" @mouseover="dragIndicator = true" @mouseout="dragIndicator = false">
+            <div class="task-drag-indicator absolute top center" x-bind:class="dragIndicator? 'active' : ''"></div>
+          <h6 class="task-title">Task   Title <%= i %></h6>
+          <div class="max"></div>
+          <button class="circle transparent">
+            <i class="material-icons">more_vert</i>
+          </button>
+        </nav>
+        <div class="task-body">
+          <div class="task-content">
+            <p>Description</p>
+          </div>
+          <div class="task-action">
+            <a href="#">Edit</a>
+            <a href="#">Delete</a>
+          </div>
+        </div>
+      </article>
+    <% } %>
+  </div>
+  
+  <script  type="module">
+    import Swappable from 'https://cdn.jsdelivr.net/npm/@shopify/draggable/build/esm/Swappable/Swappable.mjs';  
+  
+    const tasksContainer = document.querySelector('#tasks-container');
+  
+    if (tasksContainer) {
+      const swappable = new Swappable(tasksContainer, {
+        draggable: '.task-card',
+        handle: '.task-header',
+        mirror: {
+          appendTo: 'body',
+          constrainDimensions: true,
+        },
+      });
+  
+      // Saat elemen di-drag mendekati elemen lain
+      swappable.on('drag:over', (event) => {
+        const target = event.over;
+        if (target && target.classList.contains('task-card')) {
+          target.classList.add('hovered'); // Tambahkan efek glow
+        }
+      });
+  
+      // Saat elemen tidak lagi dekat dengan elemen lain
+      swappable.on('drag:out', (event) => {
+        const target = event.over;
+        if (target && target.classList.contains('task-card')) {
+          target.classList.remove('hovered'); // Hapus efek glow
+        }
+      });
+
+      swappable.on('drag:stop', (event) => {
+      const item = event.data.source;
+      item.classList.add('dropped');
+      setTimeout(() => item.classList.remove('dropped'), 300);
+    });
+
+      document.querySelectorAll('.btn-ignore').forEach((button) => {
+      ['mousedown', 'touchstart'].forEach((eventType) => {
+        button.addEventListener(eventType, (event) => {
+          event.stopPropagation();
+        });
+      });
+    });
+    }
+  </script>
+  

@@ -1,8 +1,9 @@
 @import url("/libs/beer.min.css");
-@import url("/libs/bootstrap-icons.min.css");
+/* @import url("/libs/bootstrap-icons.min.css"); */
 @import url(./nav.css);
 @import url(./beer.css);
 @import url(./auth.css);
+@import url(./home.css);
 
 @font-face {
   font-family: "Inter";
@@ -37,14 +38,17 @@ body {
 main {
   overflow-y: scroll;
   width: 100%;
-  position: relative;
+  position: absolute;
   padding: 1rem;
+  height: 86vh;
+  top: 0;
+  left: 0;
   transition: transform 280ms ease, width 200ms ease;
 }
 
 main.active {
-  width: calc(100% - calc(21rem + 5vw));
-  transform: translateX(calc(21rem + 5vw));
+  width: calc(100% - calc(17rem + 5vw));
+  transform: translateX(calc(17rem + 5vw));
 }
 
 progress {
@@ -58,7 +62,7 @@ progress {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: var(--surface-dim) !important;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,6 +75,9 @@ progress {
 }
 
 @media (max-width: 768px) {
+  .main{
+    height: 100vh;
+  }
   #nav-main-menu {
     position: fixed;
     z-index: 9998;

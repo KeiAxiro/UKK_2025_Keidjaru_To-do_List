@@ -1,3 +1,8 @@
+const theme = (from) => ui("theme", from);
+
+const mode = (from) => ui("mode", from);
+
+mode("dark")
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("container-loading").style.display = "none";
 });
@@ -11,9 +16,6 @@ const logHTMXEvent = (type, detail) =>
   );
 });
 
-const theme = (from) => ui("theme", from);
-
-const mode = (from) => ui("mode", from);
 
 document
   .querySelectorAll("i")
