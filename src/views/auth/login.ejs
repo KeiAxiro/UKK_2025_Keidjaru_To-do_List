@@ -1,6 +1,10 @@
 <div id="auth-container" class="">
   <div id="login-container">
-    <h5>To-do List</h5>
+    <h5>
+      <a class="secondary-text" href="/"
+        ><span class="primary-text bold">Quick</span>List</a
+      >
+    </h5>
     <article id="login-form" class="large-padding">
       <h6>Login</h6>
       <!-- <form action="/api/auth/login" method="post"> -->
@@ -42,5 +46,18 @@
         <a href="/register" class="link tiny-padding">Create one</a>
       </div>
     </article>
+  </div>
+  <div
+    x-data="{regSnackbar:true}"
+    class="snackbar"
+    style="cursor: default"
+    x-bind:class="regSnackbar ? 'active' : ''"
+    @click.away="regSnackbar = false"
+  >
+    <div class="max">
+      Click <a href="/register" class="inverse-link">Register</a> or Click
+      <a class="inverse-link" href="/register">Create One</a> Button to Register
+    </div>
+    <a class="inverse-link" href="/register">Register</a>
   </div>
 </div>

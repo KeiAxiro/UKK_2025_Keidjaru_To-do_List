@@ -1,6 +1,9 @@
 import { Router, Request, Response, RequestHandler } from "express";
 import { homeController } from "../controllers/home.controller.js";
-import { loginController } from "../controllers/auth.controller.js";
+import {
+  loginController,
+  registerController,
+} from "../controllers/auth.controller.js";
 import { authenticateJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
@@ -12,7 +15,7 @@ router.get(
 
 router.get("/login", loginController);
 
-router.get("/login", loginController);
+router.get("/Register", registerController);
 
 router.get("/lorem", (req: Request, res: Response) => {
   res.render("contents/lorem");
