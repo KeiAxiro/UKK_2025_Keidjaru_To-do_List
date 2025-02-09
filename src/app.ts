@@ -17,7 +17,7 @@ import indexRouter from "./routes/indexRouter.js";
 
 app.use(
   compression({
-    level: 0, // Default 6, bisa diatur 0-9 (9 paling optimal)
+    level: 9, // Default 6, bisa diatur 0-9 (9 paling optimal)
     threshold: 1024, // Hanya kompres data >1KB
   })
 );
