@@ -1,10 +1,10 @@
 
   <div id="tasks-container">
     <% for (let i = 0; i <= 12; i++) { %>
-      <article x-data="{dragIndicator: false}" class="task-card" >
+      <article x-data="{dragIndicator: false}" class="task-card surface-container"  >
           <nav class="task-header" @mouseover="dragIndicator = true" @mouseout="dragIndicator = false">
             <div class="task-drag-indicator absolute top center" x-bind:class="dragIndicator? 'active' : ''"></div>
-          <h6 class="task-title">Task   Title <%= i %></h6>
+          <h6 class="task-title">List Title <%= i %></h6>
           <div class="max"></div>
           <button class="circle transparent">
             <i class="material-icons">more_vert</i>
@@ -57,7 +57,7 @@
       swappable.on('drag:stop', (event) => {
       const item = event.data.source;
       item.classList.add('dropped');
-      setTimeout(() => item.classList.remove('dropped'), 300);
+      setTimeout(() => item.classList.remove('dropped'), 800);
     });
 
       document.querySelectorAll('.btn-ignore').forEach((button) => {

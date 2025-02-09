@@ -8,7 +8,6 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no"
     />
-    <meta http-equiv="Content-Language" content="en" />
     <link
       rel="preload"
       href="/libs/UcCO3FwrK3iLTeHuS_nVMrMxCp50qjIw2boKoduKmMEVuI6fMZg.ttf"
@@ -29,7 +28,7 @@
       x-data="{ isMenuOpen: false , isMoreOpen: false, isLoginOpen: false}"
       @click.away="isMenuOpen= false"
     >
-      <header class="surface fixed" id="header-top">
+      <header class="surface-container-high fixed" id="header-top">
         <!-- place navbar here -->
         <%- include('components/navbar_top') %> <%-
         include('components/loading') %>
@@ -38,7 +37,7 @@
         id="indicator-bar"
         class="no-margin no-round htmx-indicator"
       ></progress>
-      <div class="all-container surface fixed">
+      <div class="all-container surface-container-high fixed">
         <!-- Navbar -->
         <%- include('components/navbar_leftside') %>
 

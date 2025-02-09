@@ -35,11 +35,6 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  res.setHeader("Cache-Control", "s-maxage=30, stale-while-revalidate");
-  next();
-});
-
 // Middleware untuk parsing JSON (jika ada permintaan dalam JSON format)
 app.use(express.json());
 

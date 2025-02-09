@@ -1,5 +1,5 @@
 <nav>
-  <a
+  <button type="button"
     @click="isMenuOpen = !isMenuOpen"
     class="circle fast-ripple transparent"
     id="burger-main-menu"
@@ -10,7 +10,7 @@
       x-text="isMenuOpen ? 'menu_open' : 'menu'"
     ></i>
     <div class="tooltip bottom left-margin" translate="no">Main Menu</div>
-  </a>
+  </button>
 
   <h6 class="max" translate="no">
     <a class="secondary-text" href="/"
@@ -22,7 +22,7 @@
     <i>today</i>
   </button>
   <% if (user) { %>
-  <button class="circle transparent" @click="isMoreOpen = true">
+  <button class="circle transparent border" @click="isMoreOpen = true">
     <img class="responsive" src="/images/logo.png" />
   </button>
   <menu
@@ -50,7 +50,7 @@
   </menu>
   <% }else{ %>
   <a class="no-margin link" href="/login">
-    <button><i>login</i>Login</button>
+    <button class="fake-loading"><i>login</i>Login</button>
   </a>
   <% } %>
 </nav>

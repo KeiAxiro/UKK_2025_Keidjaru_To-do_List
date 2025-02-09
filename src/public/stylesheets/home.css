@@ -63,15 +63,18 @@
 }
 
 .task-drag-indicator {
-    margin-top: 5px;
+    border-radius: 10px;
     width: 5rem;
     height: 0.3rem;
     background-color: var(--primary);
     opacity: 0.8;
     display: flex;
+    margin-top: 10px;
+    transition: margin-top 0.1s cubic-bezier(0.075, 0.82, 0.165, 1) ;
 }
 
 .task-drag-indicator.active{
+    margin-top: 15px;
     display: flex;
 }
 
