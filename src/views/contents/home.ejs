@@ -18,16 +18,16 @@
     x-data="{dragIndicator: false}"
     class="task-card surface-container"
   >
-    <div x-data="{isMoreOpen<%= element.name %>: false}">
+    <div x-data="{isMoreOpen<%= i %>: false}">
       <button
         class="circle transparent btn-ignore absolute top-margin right"
         style="z-index: 12121"
-        @click="isMoreOpen<%= element.name %>"
+        @click="isMoreOpen<%= i %>"
       >
         <i class="material-icons">more_vert</i>
       </button>
       <menu
-        x-bind:class="isMoreOpen<%= element.name %>? 'active':''"
+        x-bind:class="isMoreOpen<%= i %>? 'active':''"
         class="left no-padding border small-round surface-bright"
         style="width: 15rem; margin-right: 1rem"
       >
