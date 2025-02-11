@@ -1,8 +1,135 @@
-<dialog class="active">
-    <h5>Title</h5>
-    <p>Content of dialog</p>
-    <nav>
-      <button>Cancel</button>
-      <button>Confirm</button>
+<dialog
+  x-data="{ 
+    isModalAdd: true, 
+    isMobile: window.innerWidth <= 768, 
+    activeTab: 'list'
+  }"
+  x-bind:class="isModalAdd ? (isMobile ? 'top active' : 'modal active') : ''"
+>
+  <button
+    @click="isModalAdd = false"
+    class="transparent circle large fixed right top"
+  >
+    <i class="large">close</i>
+  </button>
+  <div style="margin-right: 2rem">
+    <!-- Tab Navigation -->
+    <nav class="tabbed small">
+      <a
+        :class="{ 'active': activeTab === 'list' }"
+        @click="activeTab = 'list'"
+      >
+        <i>playlist_add</i>
+        <span>Add List</span>
+      </a>
+      <a
+        :class="{ 'active': activeTab === 'task' }"
+        @click="activeTab = 'task'"
+      >
+        <i>add_task</i>
+        <span>Add Task</span>
+      </a>
     </nav>
-  </dialog>
+
+    <!-- Add List Form -->
+    <div class="page padding" x-bind:class="{ 'active': activeTab === 'list' }">
+      <h5>Add List</h5>
+      <form
+        id="listForm"
+        hx-post="/api/lists"
+        hx-include="#listForm"
+        hx-target="body"
+        hx-swap="innerHTML"
+        hx-encoding="json"
+      >
+        <div class="field label">
+          <input type="text" id="listName" name="listName" required />
+          <label>Name</label>
+        </div>
+
+        <div class="field label border textarea">
+          <textarea id="listDescription" name="listDescription"></textarea>
+          <label>Description</label>
+        </div>
+      </form>
+
+      <footer class="fixed no-padding">
+        <nav class="right-align no-space no-padding">
+          <button class="transparent link" @click="isModalAdd = false">
+            Cancel
+          </button>
+          <button class="transparent link" type="submit" form="listForm">
+            Confirm
+          </button>
+        </nav>
+      </footer>
+    </div>
+
+    <!-- Add Task Form -->
+    <div class="page padding" x-bind:class="{ 'active': activeTab === 'task' }">
+      <h5>Add Task</h5>
+      <form
+        id="taskForm"
+        hx-post="/api/tasks"
+        hx-include="#taskForm"
+        hx-target="#res"
+        hx-encoding="json"
+      >
+        <div class="field label">
+          <input type="text" id="taskName" name="taskName" required />
+          <label>Title</label>
+        </div>
+        <div
+          x-data="{isSelectListOpen: false}"
+          class="field label suffix border medium"
+        >
+          <select
+            x-on:focus="isSelectListOpen = true"
+            x-on:blur="isSelectListOpen = false"
+            @click.away="isSelectListOpen = false"
+            id="listSelect"
+            hx-swap="innerHTML"
+            hx-get="/api/lists/type/option"
+            hx-trigger="load"
+            hx-target="#listSelect"
+          >
+            <option value="">-- Pilih List --</option>
+          </select>
+          <label>List</label>
+          <i
+            x-transition.duration.200ms
+            x-text="isSelectListOpen? 'arrow_drop_down':'arrow_drop_up'"
+            >arrow_drop_up</i
+          >
+        </div>
+        <nav>
+          <div class="field label border">
+            <input type="date" />
+            <label>Date</label>
+          </div>
+          <div class="field label border">
+            <input type="time" step="60" />
+            <label>Time</label>
+          </div>
+        </nav>
+        <div class="field label border textarea">
+          <textarea id="taskDescription" name="taskDescription"></textarea>
+          <label>Description</label>
+        </div>
+      </form>
+
+      <footer class="fixed no-padding">
+        <nav class="right-align no-space no-padding">
+          <button class="transparent link" @click="isModalAdd = false">
+            Cancel
+          </button>
+          <button class="transparent link" type="submit" form="taskForm">
+            Confirm
+          </button>
+        </nav>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Footer -->
+</dialog>
