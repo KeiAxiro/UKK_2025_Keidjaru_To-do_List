@@ -1,9 +1,4 @@
 <dialog
-  x-data="{ 
-    isModalAdd: true, 
-    isMobile: window.innerWidth <= 768, 
-    activeTab: 'list'
-  }"
   x-bind:class="isModalAdd ? (isMobile ? 'top active' : 'modal active') : ''"
 >
   <button
@@ -16,15 +11,15 @@
     <!-- Tab Navigation -->
     <nav class="tabbed small">
       <a
-        :class="{ 'active': activeTab === 'list' }"
-        @click="activeTab = 'list'"
+        :class="{ 'active': activeModalTab === 'list' }"
+        @click="activeModalTab = 'list'"
       >
         <i>playlist_add</i>
         <span>Add List</span>
       </a>
       <a
-        :class="{ 'active': activeTab === 'task' }"
-        @click="activeTab = 'task'"
+        :class="{ 'active': activeModalTab === 'task' }"
+        @click="activeModalTab = 'task'"
       >
         <i>add_task</i>
         <span>Add Task</span>
@@ -32,16 +27,12 @@
     </nav>
 
     <!-- Add List Form -->
-    <div class="page padding" x-bind:class="{ 'active': activeTab === 'list' }">
+    <div
+      class="page padding"
+      x-bind:class="{ 'active': activeModalTab === 'list' }"
+    >
       <h5>Add List</h5>
-      <form
-        id="listForm"
-        hx-post="/api/lists"
-        hx-include="#listForm"
-        hx-target="body"
-        hx-swap="innerHTML"
-        hx-encoding="json"
-      >
+      <form id="listForm" action="/api/lists" method="post">
         <div class="field label">
           <input type="text" id="listName" name="listName" required />
           <label>Name</label>
@@ -66,15 +57,12 @@
     </div>
 
     <!-- Add Task Form -->
-    <div class="page padding" x-bind:class="{ 'active': activeTab === 'task' }">
+    <div
+      class="page padding"
+      x-bind:class="{ 'active': activeModalTab === 'task' }"
+    >
       <h5>Add Task</h5>
-      <form
-        id="taskForm"
-        hx-post="/api/tasks"
-        hx-include="#taskForm"
-        hx-target="#res"
-        hx-encoding="json"
-      >
+      <form id="taskForm" action="/api/tasks" method="post">
         <div class="field label">
           <input type="text" id="taskName" name="taskName" required />
           <label>Title</label>
@@ -88,12 +76,13 @@
             x-on:blur="isSelectListOpen = false"
             @click.away="isSelectListOpen = false"
             id="listSelect"
-            hx-swap="innerHTML"
-            hx-get="/api/lists/type/option"
-            hx-trigger="load"
-            hx-target="#listSelect"
           >
             <option value="">-- Pilih List --</option>
+            <% lists.forEach(element => { %>
+            <option id="opt-<%= element.id %>" value="<%= element.id %>">
+              <%= element.name %>
+            </option>
+            <% }) %>
           </select>
           <label>List</label>
           <i

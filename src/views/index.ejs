@@ -18,35 +18,11 @@
     />
 
     <link rel="stylesheet" href="stylesheets/style.css" />
-
   </head>
 
   <div id="snackbars"><%- include('components/snackbars') %></div>
-<div id="modal"></div>
-  <body class="background">
-    <div
-      x-data="{ isMenuOpen: false , isMoreOpen: false, isLoginOpen: false}"
-      @click.away="isMenuOpen= false"
-    >
-      <header class="surface-container-high fixed" id="header-top">
-        <!-- place navbar here -->
-        <%- include('components/navbar_top') %> <%-
-        include('components/loading') %>
-      </header>
-      <progress
-        id="indicator-bar"
-        class="no-margin no-round htmx-indicator"
-      ></progress>
-      <div class="all-container surface-container-high fixed">
-        <!-- Navbar -->
-        <%- include('components/navbar_leftside') %>
 
-        <!-- Konten Utama -->
-        <main :class="isMenuOpen ? 'active' : ''">
-          <div x-transition="" id="res"><%- include(vContent) %></div>
-        </main>
-      </div>
-    </div>
-    <%- include('libs/scripts') %>
+  <body class="background">
+    <%- include('body_root') %> <%- include('libs/scripts') %>
   </body>
 </html>

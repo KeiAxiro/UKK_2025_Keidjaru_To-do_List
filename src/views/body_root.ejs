@@ -1,0 +1,28 @@
+<div
+  x-data="{ isMenuOpen: false , isMoreOpen: false, isLoginOpen: false, isModalAdd: false, 
+    isMobile: window.innerWidth <= 768, 
+    activeModalTab: 'list'}"
+  @click.away="isMenuOpen= false"
+  id="root"
+>
+  <% if (user) { %>
+  <div id="modal"><%- include('components/modal_add') %></div>
+  <% } %>
+  <header class="surface-container-high fixed" id="header-top">
+    <!-- place navbar here -->
+    <%- include('components/navbar_top') %> <%- include('components/loading') %>
+  </header>
+  <progress
+    id="indicator-bar"
+    class="no-margin no-round htmx-indicator"
+  ></progress>
+  <div class="all-container surface-container-high fixed">
+    <!-- Navbar -->
+    <% if (user) { %> <%- include('components/navbar_leftside') %> <% } %>
+
+    <!-- Konten Utama -->
+    <main :class="isMenuOpen ? 'active' : ''">
+      <div x-transition="" id="res"><%- include(vContent) %></div>
+    </main>
+  </div>
+</div>

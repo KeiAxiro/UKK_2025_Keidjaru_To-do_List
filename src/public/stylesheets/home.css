@@ -1,108 +1,109 @@
 #tasks-container {
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr; /* Default: 1 kolom di perangkat kecil */
-    grid-template-rows:max-content;
-    gap: 1rem;
-    width: 100%;
-    transition: transform 200ms ease;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr; /* Default: 1 kolom di perangkat kecil */
+  grid-template-rows: max-content;
+  gap: 1rem;
+  width: 100%;
+  transition: transform 200ms ease;
 }
 
 /* Perangkat sedang (≥768px) → 2 kolom */
 
-
 /* Jika #nav-main-menu memiliki class .active, maka ubah grid */
 #nav-main-menu.active ~ #tasks-container {
-    /* Perangkat besar (≥992px) → 2 kolom */
+  /* Perangkat besar (≥992px) → 2 kolom */
 
-    @media (min-width: 768px) {
-        grid-template-columns: repeat(1, 1fr);
-    }
-    @media (min-width: 992px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    /* Perangkat sangat besar (≥1200px) → 3 kolom */
-    @media (min-width: 1600px) {
-        grid-template-columns: repeat(4, 1fr);
-    }
+  /* Perangkat sangat besar (≥1200px) → 3 kolom */
+  @media (min-width: 1600px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .task-card {
-    /* touch-action: !important; */
-    margin: 0;
-    padding: 0;
-    height: 20rem;
-    max-width: 100%;
-    border-top: 0;
-    transition: box-shadow 0.5s ease, border 0.1s ease-in-out;
-    will-change: auto;
+  /* touch-action: !important; */
+  margin: 0;
+  padding: 0;
+  height: 20rem;
+  max-width: 100%;
+  border-top: 0;
+  transition: box-shadow 0.5s ease, border 0.1s ease-in-out;
+  will-change: auto;
 }
-.task-card.dropped{
-    border-top: 3px solid var(--primary);
-    box-shadow: 0px 0px 10px var(--primary);
-    
+.task-card.dropped {
+  border-top: 3px solid var(--primary);
+  box-shadow: 0px 0px 10px var(--primary);
 }
 .task-card.hovered {
-    border-top: 5px solid var(--primary);
-    box-shadow: 0px 0px 15px var(--primary);
-
-  }
-
+  border-top: 5px solid var(--primary);
+  box-shadow: 0px 0px 15px var(--primary);
+}
 
 .task-header {
-    margin: 0;
-    cursor: grab;
-    padding: 1rem;
-    padding-right: 0.5rem;
+  width: 100%;
+  margin: 0;
+  cursor: grab;
+  padding: 1rem;
+  padding-right: 0.5rem;
 }
 
 .task-body {
-    padding: 1rem;
-    padding-top: 0;
+  padding: 1rem;
+  padding-top: 0;
 }
 
 .task-drag-indicator {
-    border-radius: 10px;
-    width: 5rem;
-    height: 0.3rem;
-    background-color: var(--primary);
-    opacity: 0.8;
-    display: flex;
-    margin-top: 1vh;
-    transition: margin-top 0.1s cubic-bezier(0.075, 0.82, 0.165, 1) ;
+  border-radius: 10px;
+  width: 5rem;
+  height: 0.3rem;
+  background-color: var(--primary);
+  opacity: 0.8;
+  display: flex;
+  margin-top: 1vh;
+  transition: margin-top 0.1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.task-drag-indicator.active{
-    margin-top: 1.3vh;
-    display: flex;
+.task-drag-indicator.active {
+  margin-top: 1.3vh;
+  display: flex;
+}
+
+.task-menu-more {
+  width: 210rem;
 }
 
 @media (min-width: 768px) {
-    .task-drag-indicator{
-        display: none;
-    }
+  .task-drag-indicator {
+    display: none;
+  }
 
-    #tasks-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  #tasks-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 /* Perangkat besar (≥992px) → 3 kolom */
 @media (min-width: 992px) {
-    #tasks-container {
-        grid-template-columns: repeat(3, 1fr);
-    }
+  #tasks-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* Perangkat sangat besar (≥1200px) → 4 kolom */
 @media (min-width: 1200px) {
-    #tasks-container {
-        grid-template-columns: repeat(3 , 1fr);
-    }
+  #tasks-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 @media (min-width: 1600px) {
-    #tasks-container {
-        grid-template-columns: repeat(4 , 1fr);
-    }
+  #tasks-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

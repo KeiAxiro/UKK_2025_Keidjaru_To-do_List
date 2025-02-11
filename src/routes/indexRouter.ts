@@ -10,7 +10,7 @@ const router = Router();
 router.get(
   "/",
   authenticateJWT("ALL") as unknown as RequestHandler,
-  homeController
+  homeController as any
 );
 
 router.get("/login", loginController);

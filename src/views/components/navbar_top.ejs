@@ -1,5 +1,8 @@
 <nav>
-  <button type="button"
+  <% if (user) { %>
+
+  <button
+    type="button"
     @click="isMenuOpen = !isMenuOpen"
     class="circle fast-ripple transparent"
     id="burger-main-menu"
@@ -11,6 +14,7 @@
     ></i>
     <div class="tooltip bottom left-margin" translate="no">Main Menu</div>
   </button>
+  <% } %>
 
   <h6 class="max" translate="no">
     <a class="secondary-text" href="/"
@@ -49,6 +53,12 @@
     </nav>
   </menu>
   <% }else{ %>
-    <button hx-target="#res" hx-get="/api/components/login" hx-indicator="#indicator-bar"><i>login</i>Login</button>
+  <button
+    hx-target="#res"
+    hx-get="/api/components/login"
+    hx-indicator="#indicator-bar"
+  >
+    <i>login</i>Login
+  </button>
   <% } %>
 </nav>

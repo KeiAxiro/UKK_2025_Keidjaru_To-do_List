@@ -1,66 +1,66 @@
 <nav
   class="drawer surface-bright small-round"
   x-bind:class="isMenuOpen ? 'active' : ''"
-    x-data="{activeTab: 'list' }"
+  x-data="{activeMenuTab: 'list' }"
   id="nav-main-menu"
 >
   <header>
     <nav>
-      <h4 class="max" translate="no">Main Menu</h4>
+      <h5 class="max" translate="no">Main Menu</h5>
       <button @click="isMenuOpen = false" class="transparent circle large">
         <i class="large">close</i>
       </button>
     </nav>
   </header>
   <nav>
-    <button class="extra fill"
-    hx-get="/api/components/modaladd" hx-target="#modal" hx-swap="innerHTML">
+    <button @click="isModalAdd= true" class="extra fill">
       <i>add</i>
       <span>Create</span>
     </button>
   </nav>
-  <br>  
+  <br />
   <nav class="drawer no-padding" id="nav-main-content">
     <a
-      hx-get="/api/components/home" 
-      hx-target="#res" 
+      hx-get="/api/components/home"
+      hx-target="#res"
       hx-indicator="#indicator-bar"
-      :class="{ 'primary': activeTab === 'list' }"
-      @click="activeTab = 'list'"
+      :class="{ 'primary': activeMenuTab === 'list' }"
+      @click="activeMenuTab = 'list'"
     >
       <i>checklist</i>
       <span>All List</span>
     </a>
 
-    <a 
+    <a
       hx-get="/api/components/trash"
       hx-target="#res"
       hx-indicator="#indicator-bar"
-      :class="{ 'primary': activeTab === 'trash' }"
-      @click="activeTab = 'trash'"
+      :class="{ 'primary': activeMenuTab === 'trash' }"
+      @click="activeMenuTab = 'trash'"
     >
       <i>delete</i>
       <span>Trash</span>
     </a>
     <hr class="top-margin bottom-margin" />
-    
-    <details> 
+
+    <details open>
       <summary>Lists</summary>
-    <nav class="drawer no-padding no-margin" id="nav-main-content-tasks"> 
-        <% for( let i = 0; i < 12; i++ ) { %>
-          
-          <a
-          hx-get="/api/components/trash"
+      <nav class="drawer no-padding no-margin" id="nav-main-content-tasks">
+        <% var i=0; lists.forEach(element => { i++; %>
+
+        <a
+          hx-get="/api/components/task/<%= element.id %>"
           hx-target="#res"
           hx-indicator="#indicator-bar"
-          :class="{ 'primary': activeTab === 'trash-<%= i %>' }"
-      @click="activeTab = 'trash-<%= i %>'"
-      >
-      <i>delete</i>
-      <span>Trash</span>
-    </a>
-    <% } %>
+          :class="{ 'primary': activeMenuTab === 'trash-<%= element.id %>' }"
+          @click="activeMenuTab = 'trash-<%= element.id %>'"
+        >
+          <i>task_alt</i>
+          <div class="max"><%= element.name %></div>
+          <b><%= element.taskCount %></b>
+        </a>
+        <% }) %>
+      </nav>
+    </details>
   </nav>
-</details>
-</nav>
 </nav>

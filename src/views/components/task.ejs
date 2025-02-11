@@ -1,44 +1,9 @@
 <div id="tasks-container">
-  <% if (!lists.length) { %>
-  <article>
-    <div class="row">
-      <div class="max">
-        <h5>Welcome</h5>
-        <p>Create New Task Here!</p>
-      </div>
-    </div>
-    <nav>
-      <button @click="isModalAdd = true">Create</button>
-    </nav>
-  </article>
-  <% } %> <% var i=0; lists.forEach(element => { i++; %>
-
   <article
-    id="task-<%= element.id %>"
+    id="task-<%= lists.id %>"
     x-data="{dragIndicator: false}"
     class="task-card surface-container"
   >
-    <div x-data="{isMoreOpen<%= element.name %>: false}">
-      <button
-        class="circle transparent btn-ignore absolute top-margin right"
-        style="z-index: 12121"
-        @click="isMoreOpen<%= element.name %>"
-      >
-        <i class="material-icons">more_vert</i>
-      </button>
-      <menu
-        x-bind:class="isMoreOpen<%= element.name %>? 'active':''"
-        class="left no-padding border small-round surface-bright"
-        style="width: 15rem; margin-right: 1rem"
-      >
-        <nav class="drawer">
-          <a href="/api/auth/logout">
-            <i>edit</i>
-            <span>Edit</span>
-          </a>
-        </nav>
-      </menu>
-    </div>
     <nav
       class="task-header"
       @mouseover="dragIndicator = true"
@@ -48,8 +13,11 @@
         class="task-drag-indicator absolute top center"
         x-bind:class="dragIndicator? 'active' : ''"
       ></div>
-      <h6 class="task-title"><%= element.name %></h6>
+      <h6 class="task-title"><%= lists.name %></h6>
       <div class="max"></div>
+      <button class="circle transparent">
+        <i class="material-icons">more_vert</i>
+      </button>
     </nav>
     <div class="task-body">
       <div class="task-content">
@@ -61,9 +29,7 @@
       </div>
     </div>
   </article>
-  <% }) %>
 </div>
-
 <script type="module">
   import Swappable from "https://cdn.jsdelivr.net/npm/@shopify/draggable/build/esm/Swappable/Swappable.mjs";
 
