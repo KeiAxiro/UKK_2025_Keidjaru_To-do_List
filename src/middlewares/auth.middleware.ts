@@ -137,15 +137,23 @@ export const authenticateJWT = (requiredRole: string) => {
       }
     } else {
       if (!token) {
-        return res
-          .status(403)
-          .json({ message: "Access denied. No token provided." });
+        setSnackbar(req, " Access Denied. No token provided.", "error");
+        return res.render("index", {
+          title: "Invalid",
+          user: {},
+          vContent: "auth/login",
+        });
       }
     }
 
     jwt.verify(token, JWT_SECRET, (err: any, user: any) => {
       if (err) {
-        return res.status(403).json({ message: "Invalid token." });
+        setSnackbar(req, "Invalid token.", "error");
+        return res.render("index", {
+          title: "Invalid",
+          user: {},
+          vContent: "auth/login",
+        });
       }
 
       (req as any).user = user;
@@ -155,9 +163,12 @@ export const authenticateJWT = (requiredRole: string) => {
         requiredRole !== "ALL" &&
         user.role !== requiredRole
       ) {
-        return res
-          .status(403)
-          .json({ message: "Access denied. Insufficient role." });
+        setSnackbar(req, "Access denied. Insufficient role", "error");
+        return res.render("index", {
+          title: "Invalid",
+          user: {},
+          vContent: "auth/login",
+        });
       }
 
       next(); // Jika lolos semua validasi, lanjutkan
