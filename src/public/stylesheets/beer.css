@@ -12,3 +12,13 @@
 i {
   translate: no;
 }
+
+dialog {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  dialog {
+    width: 55vw;
+  }
+}

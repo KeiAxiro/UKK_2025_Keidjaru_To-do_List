@@ -76,8 +76,8 @@ progress {
 }
 
 @media (max-width: 768px) {
-  main{
-    height:86vh;
+  main {
+    height: 86vh;
   }
   #nav-main-menu {
     position: fixed;
