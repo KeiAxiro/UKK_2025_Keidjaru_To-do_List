@@ -21,8 +21,8 @@
 
   </head>
 
-  <div id="snackbars "><%- include('components/snackbars') %></div>
-
+  <div id="snackbars"><%- include('components/snackbars') %></div>
+<div id="modal"></div>
   <body class="background">
     <div
       x-data="{ isMenuOpen: false , isMoreOpen: false, isLoginOpen: false}"
@@ -42,7 +42,7 @@
         <%- include('components/navbar_leftside') %>
 
         <!-- Konten Utama -->
-        <main @click="isMenuOpen = false" :class="isMenuOpen ? 'active' : ''">
+        <main :class="isMenuOpen ? 'active' : ''">
           <div x-transition="" id="res"><%- include(vContent) %></div>
         </main>
       </div>

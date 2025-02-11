@@ -2,7 +2,9 @@ const theme = (from) => ui("theme", from);
 
 const mode = (from) => ui("mode", from);
 
-mode("dark")
+async () => {
+  await mode("dark")
+};
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("container-loading").style.display = "none";
 });

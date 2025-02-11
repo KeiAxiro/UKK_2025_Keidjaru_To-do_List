@@ -43,7 +43,7 @@
       </form>
       <div id="footer-auth" class="middle-align center-align large-text">
         Do not have an account?
-        <a href="/register" class="link tiny-padding">Create one</a>
+        <a hx-get="/api/components/register" hx-target="#res" hx-trigger="click"  class="link tiny-padding">Create one</a>
       </div>
     </article>
   </div>
@@ -55,9 +55,9 @@
     @click.away="regSnackbar = false"
   >
     <div class="max">
-      Click <a href="/register" class="inverse-link">Register</a> or Click
-      <a class="inverse-link" href="/register">Create One</a> Button to Register
+      Click <a hx-get="/api/components/register" hx-target="#res" hx-trigger="click"  class="inverse-link">Register</a> or Click
+      <a class="inverse-link" hx-get="/api/components/register" hx-target="#res" hx-trigger="click" >Create One</a> Button to Register
     </div>
-    <a class="inverse-link" href="/register">Register</a>
+    <a class="inverse-link" hx-get="/api/components/register" hx-target="#res" hx-trigger="click" >Register</a>
   </div>
 </div>

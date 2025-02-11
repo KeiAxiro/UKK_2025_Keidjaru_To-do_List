@@ -1,51 +1,66 @@
 <nav
   class="drawer surface-bright small-round"
   x-bind:class="isMenuOpen ? 'active' : ''"
+    x-data="{activeTab: 'list' }"
   id="nav-main-menu"
 >
   <header>
     <nav>
-      <h6 class="max" translate="no">Main Menu</h6>
+      <h4 class="max" translate="no">Main Menu</h4>
       <button @click="isMenuOpen = false" class="transparent circle large">
-        <i>close</i>
+        <i class="large">close</i>
       </button>
     </nav>
   </header>
+  <nav>
+    <button class="extra fill"
+    hx-get="/api/components/modaladd" hx-target="#modal" hx-swap="innerHTML">
+      <i>add</i>
+      <span>Create</span>
+    </button>
+  </nav>
+  <br>  
   <nav class="drawer no-padding" id="nav-main-content">
-    <a class="primary" @click="theme('#ff00ff')">
-      <i>inbox</i>
+    <a
+      hx-get="/api/components/home" 
+      hx-target="#res" 
+      hx-indicator="#indicator-bar"
+      :class="{ 'primary': activeTab === 'list' }"
+      @click="activeTab = 'list'"
+    >
+      <i>checklist</i>
+      <span>All List</span>
+    </a>
 
-      <span class="max" aria-label="Inbox">Inbox</span>
-      <b>24</b>
-    </a>
-    <a hx-get="/lorem" hx-target="#res" hx-indicator="#indicator-bar">
-      <i>send</i>
-      <span>Outbox</span>
-    </a>
-    <a hx-get="/api/njir" hx-target="#res" hx-indicator="#indicator-bar">
-      <i>favorite</i>
-      <span>favorities</span>
-    </a>
-    <a>
+    <a 
+      hx-get="/api/components/trash"
+      hx-target="#res"
+      hx-indicator="#indicator-bar"
+      :class="{ 'primary': activeTab === 'trash' }"
+      @click="activeTab = 'trash'"
+    >
       <i>delete</i>
       <span>Trash</span>
     </a>
-    <hr />
-    <label>Labels</label>
-    <a>
-      <i>fiber_manual_record</i>
-      <span>Label</span>
-    </a>
-    <a>
-      <i>change_history</i>
-      <span>Label</span>
-    </a>
-    <% for( let i = 0; i < 120; i++ ) { %>
-
-    <a>
-      <i>stop</i>
-      <span>Label</span>
+    <hr class="top-margin bottom-margin" />
+    
+    <details> 
+      <summary>Lists</summary>
+    <nav class="drawer no-padding no-margin" id="nav-main-content-tasks"> 
+        <% for( let i = 0; i < 12; i++ ) { %>
+          
+          <a
+          hx-get="/api/components/trash"
+          hx-target="#res"
+          hx-indicator="#indicator-bar"
+          :class="{ 'primary': activeTab === 'trash-<%= i %>' }"
+      @click="activeTab = 'trash-<%= i %>'"
+      >
+      <i>delete</i>
+      <span>Trash</span>
     </a>
     <% } %>
   </nav>
+</details>
+</nav>
 </nav>

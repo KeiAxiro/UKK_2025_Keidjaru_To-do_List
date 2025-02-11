@@ -30,8 +30,11 @@
 
 #nav-main-content {
   width: 100%;
-  height: 72vh;
-  overflow: auto;
+}
+#nav-main-content-tasks {
+  width: 100%;
+  height: 40vh;
+    overflow: scroll;
 }
 
 #menu-more {
