@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "postinstall": "prisma generate",
+    "migrate": "prisma migrate deploy",
     "build": "tsc && ncp src/views dist/views && ncp src/public dist/public",
     "start": "node dist/app.js",
     "dev": "bun --watch run ./src/app.ts",
