@@ -39,8 +39,8 @@
         </nav>
       </menu>
     </div>
-    <nav
-      class="task-header"
+    <div
+      class="task-header bottom-margin"
       @mouseover="dragIndicator = true"
       @mouseout="dragIndicator = false"
     >
@@ -48,13 +48,16 @@
         class="task-drag-indicator absolute top center"
         x-bind:class="dragIndicator? 'active' : ''"
       ></div>
-      <h6 class="task-title truncateLists max"><%= element.name %></h6>
-      <div class=""></div>
-    </nav>
+
+      <h6 class="task-title truncateLists no-margin max">
+        <%= element.name %>
+      </h6>
+      <span class="no-margin grey-text truncateLists">
+        <%= element.description %>
+      </span>
+    </div>
     <div class="task-body">
-      <div class="task-content">
-        <p>Description</p>
-      </div>
+      <div class="task-content"></div>
       <div class="task-action">
         <a href="#">Edit</a>
         <a href="#">Delete</a>
@@ -63,7 +66,6 @@
   </article>
   <% }) %>
 </div>
-
 <script type="module">
   import Swappable from "https://cdn.jsdelivr.net/npm/@shopify/draggable/build/esm/Swappable/Swappable.mjs";
 

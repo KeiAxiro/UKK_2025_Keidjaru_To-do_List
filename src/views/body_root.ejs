@@ -1,4 +1,3 @@
-<div id="snackbars"><%- include('components/snackbars') %></div>
 <div
   x-data="{ isMenuOpen: false , isMoreOpen: false, isLoginOpen: false, isModalAdd: false, 
     isMobile: window.innerWidth <= 768, 
@@ -6,6 +5,7 @@
   @click.away="isMenuOpen= false"
   id="root"
 >
+  <div id="snackbars"><%- include('components/snackbars') %></div>
   <% if (user) { %>
   <div id="modal"><%- include('components/modal_add') %></div>
   <% } %>

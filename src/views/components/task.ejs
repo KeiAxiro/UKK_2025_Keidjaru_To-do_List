@@ -1,23 +1,50 @@
-<div id="tasks-container">
+<style>
+  .task-card-one {
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .task-card-one {
+      min-width: 40%;
+      width: fit-content;
+      max-width: 100%;
+    }
+  }
+</style>
+<div id="tasks-container-one">
   <article
     id="task-<%= lists.id %>"
     x-data="{dragIndicator: false}"
-    class="task-card surface-container"
+    class="task-card-one absolute center surface-container"
   >
-    <nav
-      class="task-header"
-      @mouseover="dragIndicator = true"
-      @mouseout="dragIndicator = false"
-    >
+    <div x-data="{isMoreOpen: false}">
+      <button
+        class="circle transparent btn-ignore absolute top-margin right"
+        style="z-index: 12121"
+        @click="isMoreOpen"
+      >
+        <i class="material-icons">more_vert</i>
+      </button>
+      <menu
+        x-bind:class="isMoreOpen? 'active':''"
+        class="left no-padding border small-round surface-bright"
+        style="width: 15rem; margin-right: 1rem"
+      >
+        <nav class="drawer">
+          <a href="/api/auth/logout">
+            <i>edit</i>
+            <span>Edit</span>
+          </a>
+        </nav>
+      </menu>
+    </div>
+    <nav class="task-header" style="cursor: default">
       <div
         class="task-drag-indicator absolute top center"
         x-bind:class="dragIndicator? 'active' : ''"
       ></div>
-      <h6 class="task-title"><%= lists.name %></h6>
-      <div class="max"></div>
-      <button class="circle transparent">
-        <i class="material-icons">more_vert</i>
-      </button>
+      <h6 class="task-title truncateLists max"><%= lists.name %></h6>
+      <div class=""></div>
     </nav>
     <div class="task-body">
       <div class="task-content">
@@ -30,49 +57,3 @@
     </div>
   </article>
 </div>
-<script type="module">
-  import Swappable from "https://cdn.jsdelivr.net/npm/@shopify/draggable/build/esm/Swappable/Swappable.mjs";
-
-  const tasksContainer = document.querySelector("#tasks-container");
-
-  if (tasksContainer) {
-    const swappable = new Swappable(tasksContainer, {
-      draggable: ".task-card",
-      handle: ".task-header",
-      mirror: {
-        appendTo: "body",
-        constrainDimensions: true,
-      },
-    });
-
-    // Saat elemen di-drag mendekati elemen lain
-    swappable.on("drag:over", (event) => {
-      const target = event.over;
-      if (target && target.classList.contains("task-card")) {
-        target.classList.add("hovered"); // Tambahkan efek glow
-      }
-    });
-
-    // Saat elemen tidak lagi dekat dengan elemen lain
-    swappable.on("drag:out", (event) => {
-      const target = event.over;
-      if (target && target.classList.contains("task-card")) {
-        target.classList.remove("hovered"); // Hapus efek glow
-      }
-    });
-
-    swappable.on("drag:stop", (event) => {
-      const item = event.data.source;
-      item.classList.add("dropped");
-      setTimeout(() => item.classList.remove("dropped"), 800);
-    });
-
-    document.querySelectorAll(".btn-ignore").forEach((button) => {
-      ["mousedown", "touchstart"].forEach((eventType) => {
-        button.addEventListener(eventType, (event) => {
-          event.stopPropagation();
-        });
-      });
-    });
-  }
-</script>
