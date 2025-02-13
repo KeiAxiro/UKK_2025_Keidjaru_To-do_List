@@ -75,6 +75,14 @@ progress {
   height: 400px;
 }
 
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  width: 100%; /* Ikut lebar parent */
+}
+
 @media (max-width: 768px) {
   main {
     height: 86vh;

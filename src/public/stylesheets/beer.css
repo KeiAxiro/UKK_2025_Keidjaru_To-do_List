@@ -13,12 +13,14 @@ i {
   translate: no;
 }
 
-dialog {
+#modalAdd {
   width: 100%;
+  display: table !important;
+  overflow-y: auto;
 }
 
 @media (min-width: 768px) {
-  dialog {
+  #modalAdd {
     width: 55vw;
   }
 }

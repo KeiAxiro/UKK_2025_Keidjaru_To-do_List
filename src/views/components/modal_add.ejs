@@ -1,4 +1,5 @@
 <dialog
+  id="modalAdd"
   x-bind:class="isModalAdd ? (isMobile ? 'top active' : 'modal active') : ''"
 >
   <button
@@ -49,7 +50,12 @@
           <button class="transparent link" @click="isModalAdd = false">
             Cancel
           </button>
-          <button class="transparent link" type="submit" form="listForm">
+          <button
+            class="transparent link"
+            type="submit"
+            form="listForm"
+            @click="isModalAdd = false"
+          >
             Confirm
           </button>
         </nav>
@@ -92,11 +98,13 @@
           >
         </div>
         <nav>
-          <div class="field label border">
+          <div class="field label prefix border">
+            <i>calendar_month</i>
             <input type="date" />
             <label>Date</label>
           </div>
-          <div class="field label border">
+          <div class="field label prefix border">
+            <i>schedule</i>
             <input type="time" step="60" />
             <label>Time</label>
           </div>

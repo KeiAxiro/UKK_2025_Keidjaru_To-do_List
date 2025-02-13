@@ -1,34 +1,27 @@
 #tasks-container {
   padding: 0;
   display: grid;
-  grid-template-columns: 1fr; /* Default: 1 kolom di perangkat kecil */
+  grid-template-columns: 1fr; /* Default: 1 column on small devices */
   grid-template-rows: max-content;
   gap: 1rem;
   width: 100%;
   transition: transform 200ms ease;
 }
 
-/* Perangkat sedang (≥768px) → 2 kolom */
-
-/* Jika #nav-main-menu memiliki class .active, maka ubah grid */
+/* If #nav-main-menu has the .active class, change the grid */
 #nav-main-menu.active ~ #tasks-container {
-  /* Perangkat besar (≥992px) → 2 kolom */
-
   @media (min-width: 768px) {
     grid-template-columns: repeat(1, 1fr);
   }
   @media (min-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  /* Perangkat sangat besar (≥1200px) → 3 kolom */
   @media (min-width: 1600px) {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
 .task-card {
-  /* touch-action: !important; */
   margin: 0;
   padding: 0;
   height: 20rem;
@@ -47,6 +40,8 @@
 }
 
 .task-header {
+  padding: 0;
+  display: grid;
   width: 100%;
   margin: 0;
   cursor: grab;
@@ -79,6 +74,15 @@
   width: 210rem;
 }
 
+.truncateLists {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 100%;
+  padding-right: 3rem;
+}
+
 @media (min-width: 768px) {
   .task-drag-indicator {
     display: none;
@@ -89,19 +93,21 @@
   }
 }
 
-/* Perangkat besar (≥992px) → 3 kolom */
+/* Medium devices (≥992px) → 2 columns */
 @media (min-width: 992px) {
   #tasks-container {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Perangkat sangat besar (≥1200px) → 4 kolom */
+/* Large devices (≥1200px) → 3 columns */
 @media (min-width: 1200px) {
   #tasks-container {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* Extra large devices (≥1600px) → 4 columns */
 @media (min-width: 1600px) {
   #tasks-container {
     grid-template-columns: repeat(4, 1fr);
