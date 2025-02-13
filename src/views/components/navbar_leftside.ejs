@@ -56,7 +56,7 @@
           @click="activeMenuTab = 'trash-<%= element.id %>'"
         >
           <i>task_alt</i>
-          <div class="max"><%= element.name %></div>
+          <div class="max truncate"><%= element.name %></div>
           <b><%= element.taskCount %></b>
         </a>
         <% }) %>
