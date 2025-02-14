@@ -13,7 +13,7 @@
     "seeder": "bun run ./src/prisma/seeders/index.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "Keidjaru",
   "license": "ISC",
   "description": "",
   "dependencies": {

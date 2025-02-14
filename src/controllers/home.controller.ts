@@ -44,7 +44,7 @@ export const homeController = async (
 
     // Render ke frontend
     res.render("index", {
-      title: "wow",
+      title: "Home",
       vContent: "contents/home",
       user: req.user,
       lists: listsWithTaskCounts, // Pastikan lists yang dikirim sudah ada taskCount-nya
