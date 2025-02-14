@@ -1,12 +1,8 @@
-const theme = (from) => ui("theme", from);
-
-const mode = (from) => ui("mode", from);
-
-async () => {
-  await mode("dark")
-};
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("container-loading").style.display = "none";
+  const UItheme = (from) => ui("theme", from);
+
+  const UImode = (from) => ui("mode", from);
+  UImode("dark");
 });
 
 const logHTMXEvent = (type, detail) =>
@@ -17,7 +13,6 @@ const logHTMXEvent = (type, detail) =>
     logHTMXEvent(event === "responseError" ? "error" : "log", e.detail)
   );
 });
-
 
 document
   .querySelectorAll("i")

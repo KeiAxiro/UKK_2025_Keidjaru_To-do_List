@@ -33,7 +33,7 @@
       x-bind:class="{ 'active': activeModalTab === 'list' }"
     >
       <h5>Add List</h5>
-      <form id="listForm" action="/api/lists" method="post">
+      <form id="listForm">
         <div class="field label">
           <input type="text" id="listName" name="listName" required />
           <label>Name</label>
@@ -51,6 +51,10 @@
             Cancel
           </button>
           <button
+            hx-post="/api/lists"
+            hx-target="#root"
+            hx-indicator="#indicator-bar"
+            hx-swap="innerHTML"
             class="transparent link"
             type="submit"
             form="listForm"

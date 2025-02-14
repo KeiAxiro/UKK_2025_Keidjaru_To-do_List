@@ -8,13 +8,7 @@
     <article id="reg-form" class="large-padding">
       <h6>Register</h6>
       <!-- <form action="/api/auth/login" method="post"> -->
-      <form
-        class="needs-validation"
-        action="/api/auth/register"
-        method="post"
-        novalidate=""
-        autocomplete="off"
-      >
+      <form class="needs-validation" novalidate="" autocomplete="off">
         <div class="field label border">
           <input
             name="userName"
@@ -65,6 +59,10 @@
         </div>
         <div class="" style="height: 7vh">
           <button
+            hx-post="/api/auth/register"
+            hx-swap="innerHTML"
+            hx-target="#root"
+            hx-indicator="#indicator-bar"
             type="submit"
             class="small-round large large-text absolute right fake-loading"
           >
@@ -74,9 +72,13 @@
       </form>
       <div id="footer-auth" class="middle-align center-align large-text">
         Already have an account?
-        <a hx-get="/api/components/login" class="link tiny-padding" hx-target="#res">Login</a>
+        <a
+          hx-get="/api/components/login"
+          class="link tiny-padding"
+          hx-target="#res"
+          >Login</a
+        >
       </div>
     </article>
   </div>
 </div>
-

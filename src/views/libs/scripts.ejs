@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/htmx.org@latest/dist/htmx.min.js"></script>
 <script
   type="module"
   src="https://cdn.jsdelivr.net/npm/beercss@3.9.1/dist/cdn/beer.min.js"
@@ -9,41 +10,5 @@
 ></script>
 <script
   defer
-  src="https://cdn.jsdelivr.net/npm/htmx.org@latest/dist/htmx.min.js"
-></script>
-<script
-  defer
   src="https://cdn.jsdelivr.net/npm/alpinejs@latest/dist/cdn.min.js"
 ></script>
-
-<script defer src="/javascripts/script.js"></script>
-
-<!-- <script>
-  document.querySelectorAll([".fake-loading"]).forEach((button) => {
-    button.addEventListener("click", function () {
-      let loading = document.getElementById("indicator-bar");
-      loading.style.opacity = "1"; // Tampilkan loading
-
-      // Simulasi proses selama 2 detik
-
-      setTimeout(() => {
-        loading.style.opacity = "0"; // Sembunyikan loading setelah selesai
-
-        // Buat elemen div baru
-        let snackbarContainer = document.createElement("div");
-        snackbarContainer.innerHTML = `
-                    <div x-data="{ snackbarShow: true }"
-        x-init="setTimeout(() => snackbarShow = false, 2600)"
-        @click="snackbarShow = false"
-        x-transition
-        class="snackbar top error"
-        x-bind:class="snackbarShow ? 'active' : ''">
-        I'm sorry, Server not responding
-        </div>`;
-
-        // Tambahkan elemen snackbar ke dalam body
-        document.body.appendChild(snackbarContainer);
-      }, 3000);
-    });
-  });
-</script> -->

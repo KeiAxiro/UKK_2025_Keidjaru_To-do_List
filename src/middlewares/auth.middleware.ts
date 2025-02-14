@@ -26,7 +26,7 @@ export const loginAuth = async (req: Request, res: Response) => {
       console.log("invalid username or password");
 
       setSnackbar(req, `Invalid username or password`, "error");
-      res.redirect("/login");
+      res.redirect("/api/components/root/login");
       return;
     }
 
@@ -52,7 +52,7 @@ export const loginAuth = async (req: Request, res: Response) => {
 
     setSnackbar(req, `Login Successfully!`, "primary");
 
-    res.redirect("/");
+    res.redirect("/api/components/root/contents/home");
     return;
   } catch (err) {
     if (err instanceof Error) {
@@ -79,15 +79,14 @@ export const registerAuth = async (
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail)) {
     setSnackbar(req, `Invalid email format: ${userEmail}`, "error");
     (req.session as any).snackbar = snackbar(`Invalid email format!`, "error");
-    res.redirect("/register");
-    return;
+    return res.redirect("/api/components/root/auth/register");
   }
   if (userPassword !== userConfirmPassword) {
     (req.session as any).snackbar = snackbar(
       `Passwords do not match!`,
       "error"
     );
-    res.redirect("/register");
+    return res.redirect("/api/components/root/auth/register");
     return;
   }
 
@@ -104,17 +103,17 @@ export const registerAuth = async (
       `User created successfully`,
       "green"
     );
-    res.redirect("/login");
+    res.redirect("/api/components/root/auth/login");
   } catch (error: any) {
     if (error.code === "P2002") {
       (req.session as any).snackbar = snackbar(
         `Account already exists`,
         "error"
       );
-      return res.redirect("/register");
+      return res.redirect("/api/components/root/auth/register");
     }
     (req.session as any).snackbar = snackbar(`Error: ${error}`, "error");
-    res.redirect("/register");
+    return res.redirect("/api/components/root/auth/register");
   }
 };
 

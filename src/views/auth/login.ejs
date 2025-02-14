@@ -8,12 +8,7 @@
     <article id="login-form" class="large-padding">
       <h6>Login</h6>
       <!-- <form action="/api/auth/login" method="post"> -->
-      <form
-        class="needs-validation"
-        action="/api/auth/login"
-        method="post"
-        novalidate=""
-      >
+      <form class="needs-validation">
         <div class="field label border">
           <input name="userNameEmail" type="text" autofocus required />
           <label class="grey-text">Username or Email</label>
@@ -34,8 +29,12 @@
             <span>Remember Me</span>
           </label>
           <button
+            hx-post="/api/auth/login"
+            hx-swap="innerHTML"
+            hx-target="#root"
+            hx-indicator="#indicator-bar"
             type="submit"
-            class="small-round large large-text absolute right fake-loading"
+            class="small-round large large-text absolute right"
           >
             Login
           </button>
@@ -43,7 +42,13 @@
       </form>
       <div id="footer-auth" class="middle-align center-align large-text">
         Do not have an account?
-        <a hx-get="/api/components/register" hx-target="#res" hx-trigger="click"  class="link tiny-padding">Create one</a>
+        <a
+          hx-get="/api/components/register"
+          hx-target="#res"
+          hx-trigger="click"
+          class="link tiny-padding"
+          >Create one</a
+        >
       </div>
     </article>
   </div>
@@ -55,9 +60,30 @@
     @click.away="regSnackbar = false"
   >
     <div class="max">
-      Click <a hx-get="/api/components/register" hx-target="#res" hx-trigger="click"  class="inverse-link">Register</a> or Click
-      <a class="inverse-link" hx-get="/api/components/register" hx-target="#res" hx-trigger="click" >Create One</a> Button to Register
+      Click
+      <a
+        hx-get="/api/components/register"
+        hx-target="#res"
+        hx-trigger="click"
+        class="inverse-link"
+        >Register</a
+      >
+      or Click
+      <a
+        class="inverse-link"
+        hx-get="/api/components/register"
+        hx-target="#res"
+        hx-trigger="click"
+        >Create One</a
+      >
+      Button to Register
     </div>
-    <a class="inverse-link" hx-get="/api/components/register" hx-target="#res" hx-trigger="click" >Register</a>
+    <a
+      class="inverse-link"
+      hx-get="/api/components/register"
+      hx-target="#res"
+      hx-trigger="click"
+      >Register</a
+    >
   </div>
 </div>

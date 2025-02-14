@@ -6,11 +6,18 @@ import { authenticateJWT } from "../../../middlewares/auth.middleware.js";
 const router = Router();
 
 router.get(
-  "/root",
+  "/root/*",
   authenticateJWT("ALL"),
   async (req: Request & { user?: any }, res: Response): Promise<void> => {
+    const view = req.params[0];
     const token = req.cookies.token || false;
-    if (!token) return res.redirect("/login");
+    if (!token)
+      return res.render("index", {
+        title: "Home",
+        vContent: view,
+        user: req.user,
+        regUser: (req.session as any).user,
+      });
 
     // Pastikan user ada sebelum query ke database
     if (!req.user || !req.user.id) {
@@ -43,10 +50,12 @@ router.get(
         taskCount: taskCountMap[list.id] || 0, // Jika tidak ada task, default 0
       }));
 
+      console.log(view);
+
       // Render ke frontend
-      res.render("index", {
+      res.render("body_root", {
         title: "Home",
-        vContent: "contents/home",
+        vContent: view,
         user: req.user,
         lists: listsWithTaskCounts, // Pastikan lists yang dikirim sudah ada taskCount-nya
       });
