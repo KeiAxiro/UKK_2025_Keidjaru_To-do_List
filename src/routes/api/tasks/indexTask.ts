@@ -55,18 +55,38 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.get("/ch/:id", async (req, res) => {
+router.put("/toggle/:id", async (req, res) => {
   const { id } = req.params;
   const { isCompleted } = req.body;
-  try {
-    const task = await prisma.task.update({
-      where: { id },
-      data: { isCompleted },
-    });
-    res.json(task);
-  } catch {
-    res.status(404).json({ error: "Task not found" });
-  }
+
+  const updatedTask = await prisma.task.update({
+    where: { id },
+    data: { isCompleted: isCompleted === "true" }, // Pastikan ini boolean
+  });
+
+  res.send(`
+
+<label class="checkbox large" x-data="{ checked: ${
+    updatedTask.isCompleted
+  } }" :class="{ 'overline': checked }">
+    <input
+  type="checkbox"
+  name="isCompleted"
+  ${updatedTask.isCompleted ? "checked" : ""}
+  hx-put="/api/tasks/toggle/${updatedTask.id}"
+  hx-vals='js:{ "isCompleted": event.target.checked }'
+  hx-trigger="change"
+  hx-target="#li-${updatedTask.id}"
+  hx-swap="innerHTML"
+/>
+
+    <span>${updatedTask.title}</span>
+  </label>
+  <div class="task-action">
+    <a href="#">Edit</a>
+    <a href="#">Delete</a>
+  </div>
+  `);
 });
 
 // Delete Task

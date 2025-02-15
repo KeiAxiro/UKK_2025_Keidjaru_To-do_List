@@ -48,15 +48,19 @@
         <ul class="list no-space">
           <% if (element.tasks.length > 0) { %> <% element.tasks.forEach(task =>
           { %>
-            <li class="no-padding">
+            <li class="no-padding" id="li-<%= task.id %>">
   <label class="checkbox large" x-data="{ checked: <%= task.isCompleted ? 'true' : 'false' %> }" :class="{ 'overline': checked }">
     <input
-      type="checkbox"
-      name="isCompleted"
-      :checked="checked"
-      @change="checked = !checked"
+  type="checkbox"
+  name="isCompleted"
+  :checked="checked"
+  hx-put="/api/tasks/toggle/<%= task.id %>"
+  hx-vals='js:{ "isCompleted": event.target.checked }'
+  hx-trigger="change"
+  hx-target="#li-<%= task.id %>"
+  hx-swap="innerHTML"
+/>
 
-    />
     <span> <%= task.title %> </span>
   </label>
   <div class="task-action">
