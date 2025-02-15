@@ -55,6 +55,20 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.get("/ch/:id", async (req, res) => {
+  const { id } = req.params;
+  const { isCompleted } = req.body;
+  try {
+    const task = await prisma.task.update({
+      where: { id },
+      data: { isCompleted },
+    });
+    res.json(task);
+  } catch {
+    res.status(404).json({ error: "Task not found" });
+  }
+});
+
 // Delete Task
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;

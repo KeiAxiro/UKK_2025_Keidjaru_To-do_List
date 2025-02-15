@@ -1,7 +1,7 @@
 {
   "eslint.format.enable": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[ejs]": {
     "editor.defaultFormatter": "j69.ejs-beautify"
-  }
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

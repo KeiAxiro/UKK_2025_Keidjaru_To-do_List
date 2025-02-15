@@ -1,0 +1,74 @@
+
+    <div x-data="{isMoreOpen<%= i %>: false}">
+      <button
+        class="circle transparent btn-ignore absolute top-margin right"
+        style="z-index: 12121"
+        @click="isMoreOpen<%= i %>"
+      >
+        <i class="material-icons">more_vert</i>
+        <menu
+          x-bind:class="isMoreOpen<%= i %>"
+          style="z-index: 1000"
+          class="no-wrap left absolute"
+        >
+          <li>
+            <i>edit</i>
+            <div class="max">
+              <div>Edit</div>
+            </div>
+          </li>
+          <li>
+            <i>delete</i>
+            <div class="max">
+              <div>Delete</div>
+            </div>
+          </li>
+        </menu>
+      </button>
+    </div>
+    <div
+      class="task-header bottom-margin"
+      @mouseover="dragIndicator = true"
+      @mouseout="dragIndicator = false"
+    >
+      <div
+        class="task-drag-indicator absolute top center"
+        x-bind:class="dragIndicator? 'active' : ''"
+      ></div>
+
+      <h6 class="task-title truncateLists no-margin max">
+        <%= element.name %>
+      </h6>
+      <span class="no-margin grey-text truncateLists">
+        <%= element.description %>
+      </span>
+    </div>
+    <div class="task-body">
+      <div class="task-content">
+        <ul class="list no-space">
+          <% if (element.tasks.length > 0) { %> <% element.tasks.forEach(task =>
+          { %>
+            <li class="no-padding">
+  <label class="checkbox large" x-data="{ checked: <%= task.isCompleted ? 'true' : 'false' %> }" :class="{ 'overline': checked }">
+    <input
+      type="checkbox"
+      name="isCompleted"
+      :checked="checked"
+      @change="checked = !checked"
+
+    />
+    <span> <%= task.title %> </span>
+  </label>
+  <div class="task-action">
+    <a href="#">Edit</a>
+    <a href="#">Delete</a>
+  </div>
+</li>
+
+
+          <% }); %> <% } else { %>
+          <li><em>No tasks yet.</em></li>
+          <% } %>
+        </ul>
+      </div>
+    </div>

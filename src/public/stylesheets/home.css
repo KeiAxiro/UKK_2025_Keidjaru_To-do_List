@@ -26,6 +26,7 @@
   padding: 0;
   height: auto;
   max-width: 100%;
+  min-height: 25rem;
   border-top: 0;
   transition: box-shadow 0.4s ease, border-top 0.3s ease-in-out;
   will-change: transform, opacity, box-shadow;
