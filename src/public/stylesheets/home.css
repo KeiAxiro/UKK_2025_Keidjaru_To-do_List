@@ -28,16 +28,19 @@
   max-width: 100%;
   border-top: 0;
   transition: box-shadow 0.4s ease, border-top 0.3s ease-in-out;
-  will-change: auto;
+  will-change: transform, opacity, box-shadow;
 }
 .task-card.dropped {
   box-shadow: 0px 0px 10px var(--primary);
+  will-change: box-shadow;
 }
 .task-card.hovered {
   box-shadow: 0px 0px 15px var(--primary);
+  will-change: box-shadow;
 }
 .task-card.not-hovered {
   box-shadow: 0px 0px 5px var(--primary);
+  will-change: box-shadow;
 }
 
 .task-header {
