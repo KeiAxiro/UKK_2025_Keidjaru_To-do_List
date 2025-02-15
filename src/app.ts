@@ -12,6 +12,11 @@ const __dirname = path.dirname(__filename);
 const app: Application = express();
 const PORT = 3000;
 
+// Middleware untuk parsing URL-encoded data
+app.use(express.urlencoded({ extended: true }));
+// Middleware untuk parsing JSON (jika ada permintaan dalam JSON format)
+app.use(express.json());
+
 import apiRouter from "./routes/api/indexApi.js";
 import indexRouter from "./routes/indexRouter.js";
 
@@ -22,8 +27,6 @@ app.use(
   })
 );
 
-// Middleware untuk parsing URL-encoded data
-app.use(express.urlencoded({ extended: true }));
 //kuki
 app.use(cookieParser());
 app.use(
@@ -34,9 +37,6 @@ app.use(
     cookie: { secure: false },
   })
 );
-
-// Middleware untuk parsing JSON (jika ada permintaan dalam JSON format)
-app.use(express.json());
 
 // Morgan
 app.use(morgan("dev"));

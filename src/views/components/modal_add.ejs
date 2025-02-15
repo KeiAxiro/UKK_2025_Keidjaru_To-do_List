@@ -1,6 +1,6 @@
 <dialog
   id="modalAdd"
-  x-bind:class="isModalAdd ? (isMobile ? 'top active' : 'modal active') : ''"
+  x-bind:class="isModalAdd ? (isMobile ? 'modal active' : 'modal active') : ''"
 >
   <button
     @click="isModalAdd = false"
@@ -43,27 +43,30 @@
           <textarea id="listDescription" name="listDescription"></textarea>
           <label>Description</label>
         </div>
-      </form>
 
-      <footer class="fixed no-padding">
-        <nav class="right-align no-space no-padding">
-          <button class="transparent link" @click="isModalAdd = false">
-            Cancel
-          </button>
-          <button
-            hx-post="/api/lists"
-            hx-target="#root"
-            hx-indicator="#indicator-bar"
-            hx-swap="innerHTML"
-            class="transparent link"
-            type="submit"
-            form="listForm"
-            @click="isModalAdd = false"
-          >
-            Confirm
-          </button>
-        </nav>
-      </footer>
+        <footer class="fixed no-padding">
+          <nav class="right-align no-space no-padding">
+            <button
+              class="transparent link"
+              @click="isModalAdd = false"
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              class="transparent link"
+              type="submit"
+              hx-post="/api/lists"
+              hx-target="#root"
+              hx-indicator="#indicator-bar"
+              hx-swap="innerHTML settle: 333ms"
+              @click="$nextTick(() => isModalAdd = false)"
+            >
+              Confirm
+            </button>
+          </nav>
+        </footer>
+      </form>
     </div>
 
     <!-- Add Task Form -->
@@ -72,47 +75,50 @@
       x-bind:class="{ 'active': activeModalTab === 'task' }"
     >
       <h5>Add Task</h5>
-      <form id="taskForm" action="/api/tasks" method="post">
+      <form id="taskForm">
         <div class="field label">
           <input type="text" id="taskName" name="taskName" required />
           <label>Title</label>
         </div>
+
         <div
-          x-data="{isSelectListOpen: false}"
+          x-data="{ isSelectListOpen: false }"
           class="field label suffix border medium"
         >
           <select
             x-on:focus="isSelectListOpen = true"
             x-on:blur="isSelectListOpen = false"
-            @click.away="isSelectListOpen = false"
             id="listSelect"
+            name="listId"
+            required
           >
             <option value="">-- Pilih List --</option>
             <% lists.forEach(element => { %>
-            <option id="opt-<%= element.id %>" value="<%= element.id %>">
-              <%= element.name %>
-            </option>
+            <option value="<%= element.id %>"><%= element.name %></option>
             <% }) %>
           </select>
           <label>List</label>
           <i
             x-transition.duration.200ms
-            x-text="isSelectListOpen? 'arrow_drop_down':'arrow_drop_up'"
-            >arrow_drop_up</i
+            x-text="isSelectListOpen ? 'arrow_drop_down' : 'arrow_drop_up'"
           >
+            arrow_drop_up
+          </i>
         </div>
+
         <nav>
           <div class="field label prefix border">
             <i>calendar_month</i>
-            <input type="date" />
+            <input type="date" name="taskDate" required />
             <label>Date</label>
           </div>
           <div class="field label prefix border">
             <i>schedule</i>
-            <input type="time" step="60" />
+            <input type="time" name="taskTime" step="60" required />
             <label>Time</label>
           </div>
         </nav>
+
         <div class="field label border textarea">
           <textarea id="taskDescription" name="taskDescription"></textarea>
           <label>Description</label>
@@ -124,7 +130,14 @@
           <button class="transparent link" @click="isModalAdd = false">
             Cancel
           </button>
-          <button class="transparent link" type="submit" form="taskForm">
+          <button
+            hx-post="/api/tasks"
+            hx-target="#root"
+            hx-swap="outerHTML"
+            hx-on::after-settle="Alpine.initTree($el); isModalAdd = false"
+            class="transparent link"
+            form="taskForm"
+          >
             Confirm
           </button>
         </nav>

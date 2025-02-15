@@ -27,16 +27,17 @@
   height: auto;
   max-width: 100%;
   border-top: 0;
-  transition: box-shadow 0.5s ease, border 0.1s ease-in-out;
+  transition: box-shadow 0.4s ease, border-top 0.3s ease-in-out;
   will-change: auto;
 }
 .task-card.dropped {
-  border-top: 3px solid var(--primary);
   box-shadow: 0px 0px 10px var(--primary);
 }
 .task-card.hovered {
-  border-top: 5px solid var(--primary);
   box-shadow: 0px 0px 15px var(--primary);
+}
+.task-card.not-hovered {
+  box-shadow: 0px 0px 5px var(--primary);
 }
 
 .task-header {

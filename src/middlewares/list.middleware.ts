@@ -24,9 +24,12 @@ export const createList = async (req: Request, res: Response) => {
         description: listDescription,
       },
     });
+    console.log(listName, listDescription);
     setSnackbar(req, "Success Create New List!", "primary");
-    res.redirect("/");
+    res.redirect("/api/components/root/contents/home");
   } catch (error) {
+    console.log(error, listName, listDescription);
+
     res.status(500).json({ error });
   }
 };

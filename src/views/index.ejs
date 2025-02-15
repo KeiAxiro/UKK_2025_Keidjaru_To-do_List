@@ -23,7 +23,19 @@
   </head>
 
   <body class="background">
+    <div
+  x-data="{ isMenuOpen: JSON.parse(localStorage.getItem('isMenuOpen')) || false, 
+  toggleMenu() { 
+      this.isMenuOpen = !this.isMenuOpen;
+      localStorage.setItem('isMenuOpen', this.isMenuOpen);
+  } , isMoreOpen: false, isLoginOpen: false, isModalAdd: false, 
+    isMobile: window.innerWidth <= 768, 
+    activeModalTab: 'list'}"
+  @click.away="isMenuOpen= false"
+  id="root"
+>
     <%- include('body_root') %>
+ <div></div>
     <script src="/javascripts/script.js"></script>
   </body>
 </html>
