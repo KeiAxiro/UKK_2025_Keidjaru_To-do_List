@@ -92,7 +92,6 @@
             name="listId"
             required
           >
-            <option value="">-- Pilih List --</option>
             <% lists.forEach(element => { %>
             <option value="<%= element.id %>"><%= element.name %></option>
             <% }) %>
@@ -123,25 +122,26 @@
           <textarea id="taskDescription" name="taskDescription"></textarea>
           <label>Description</label>
         </div>
-      </form>
 
-      <footer class="fixed no-padding">
-        <nav class="right-align no-space no-padding">
-          <button class="transparent link" @click="isModalAdd = false">
-            Cancel
-          </button>
-          <button
-            hx-post="/api/tasks"
-            hx-target="#root"
-            hx-swap="outerHTML"
-            hx-on::after-settle="Alpine.initTree($el); isModalAdd = false"
-            class="transparent link"
-            form="taskForm"
-          >
-            Confirm
-          </button>
-        </nav>
-      </footer>
+        <footer class="fixed no-padding">
+          <nav class="right-align no-space no-padding">
+            <button class="transparent link" @click="isModalAdd = false">
+              Cancel
+            </button>
+            <button
+              class="transparent link"
+              type="submit"
+              hx-post="/api/tasks"
+              hx-target="#root"
+              hx-indicator="#indicator-bar"
+              hx-swap="innerHTML settle: 333ms"
+              @click="$nextTick(() => isModalAdd = false)"
+            >
+              Confirm
+            </button>
+          </nav>
+        </footer>
+      </form>
     </div>
   </div>
 

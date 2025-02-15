@@ -15,7 +15,7 @@
   <% if (user) { %> <%- include('components/navbar_leftside') %> <% } %>
 
   <!-- Konten Utama -->
-  <main :class="isMenuOpen ? 'active' : ''" class="">
+  <main x-bind:class="{ 'active': isMenuOpen }">
     <div x-transition="" id="res"><%- include(vContent) %></div>
   </main>
 </div>

@@ -25,19 +25,25 @@
         @click="isMoreOpen<%= i %>"
       >
         <i class="material-icons">more_vert</i>
-      </button>
-      <menu
-        x-bind:class="isMoreOpen<%= i %>? 'active':''"
-        class="left no-padding border small-round surface-bright"
-        style="width: 15rem; margin-right: 1rem"
-      >
-        <nav class="drawer">
-          <a href="/api/auth/logout">
+        <menu
+          x-bind:class="isMoreOpen<%= i %>"
+          style="z-index: 1000"
+          class="no-wrap left absolute"
+        >
+          <li>
             <i>edit</i>
-            <span>Edit</span>
-          </a>
-        </nav>
-      </menu>
+            <div class="max">
+              <div>Edit</div>
+            </div>
+          </li>
+          <li>
+            <i>delete</i>
+            <div class="max">
+              <div>Delete</div>
+            </div>
+          </li>
+        </menu>
+      </button>
     </div>
     <div
       class="task-header bottom-margin"

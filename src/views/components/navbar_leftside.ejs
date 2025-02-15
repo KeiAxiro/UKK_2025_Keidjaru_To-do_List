@@ -1,6 +1,6 @@
 <nav
   class="drawer surface-bright small-round"
-  x-bind:class="isMenuOpen ? 'active' : ''"
+  x-bind:class="{ 'active': isMenuOpen }"
   x-data="{activeMenuTab: 'list' }"
   id="nav-main-menu"
 >
