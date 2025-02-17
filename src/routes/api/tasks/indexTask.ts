@@ -15,6 +15,11 @@ const router = Router();
 router.post("/", authenticateJWT("ALL"), async (req, res) => {
   const { listId, taskName, taskDate, taskTime } = req.body;
   try {
+    if (!listId || !taskName || !taskDate || !taskTime) {
+      setSnackbar(req, "Please fill all fields", "error");
+      res.redirect("/api/components/root/contents/home");
+      return;
+    }
     const dueDate = new Date(`${taskDate}T${taskTime}:00.000Z`);
     const task = await prisma.task.create({
       data: { listId, title: taskName, dueDate },

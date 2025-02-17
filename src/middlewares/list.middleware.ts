@@ -17,6 +17,11 @@ export const getAllLists = async (req: Request, res: Response) => {
 export const createList = async (req: Request, res: Response) => {
   const { listName, listDescription } = req.body;
   try {
+    if (!listName || !listDescription) {
+      setSnackbar(req, "Please fill all fields", "error");
+      res.redirect("/api/components/root/contents/home");
+      return;
+    }
     const newList = await prisma.list.create({
       data: {
         userId: (req as any).user.id,
