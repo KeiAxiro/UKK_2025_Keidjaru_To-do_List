@@ -26,7 +26,7 @@ export const loginAuth = async (req: Request, res: Response) => {
       console.log("invalid username or password");
 
       setSnackbar(req, `Invalid username or password`, "error");
-      res.redirect("/api/components/root/login");
+      res.redirect("/api/components/root/auth/login");
       return;
     }
 
@@ -51,12 +51,13 @@ export const loginAuth = async (req: Request, res: Response) => {
     }
 
     setSnackbar(req, `Login Successfully!`, "primary");
-
     res.redirect("/api/components/root/contents/home");
     return;
   } catch (err) {
     if (err instanceof Error) {
       res.json(err.message);
+      setSnackbar(req, `${err}!`, "error");
+      res.redirect("/api/components/root/contents/home");
     }
   }
 };
