@@ -71,25 +71,37 @@ router.put("/toggle/:id", async (req, res) => {
 
   res.send(`
 
-<label class="checkbox large" x-data="{ checked: ${
+<header class="no-padding task-body">
+  <nav x-data="{ checked: ${
     updatedTask.isCompleted
-  } }" :class="{ 'overline': checked }">
-    <input
-  type="checkbox"
-  name="isCompleted"
-  ${updatedTask.isCompleted ? "checked" : ""}
-  hx-put="/api/tasks/toggle/${updatedTask.id}"
-  hx-vals='js:{ "isCompleted": event.target.checked }'
-  hx-trigger="change"
-  hx-target="#li-${updatedTask.id}"
-  hx-swap="innerHTML"
-/>
+  } }" style="gap: 0.3rem; margin-right: 0.4rem;" class="no-space">
+    <label class="checkbox left-margin">
+      <input 
+        type="checkbox" 
+        name="isCompleted" 
+        ${updatedTask.isCompleted ? "checked" : ""} 
+        hx-put="/api/tasks/toggle/${updatedTask.id}" 
+        hx-vals='js:{ "isCompleted": event.target.checked }' 
+        hx-trigger="change" 
+        hx-target="#li-${updatedTask.id}" 
+        hx-swap="innerHTML"
+      />
+      <span></span>
+    </label>
+    
+    <span :class="{ 'overline': checked }" class="small-line max tiny-margin">${
+      updatedTask.title
+    }</span>
+    
+    <button class="circle transparent">
+      <i>edit_square</i>
+    </button>
+    <button class="circle transparent">
+      <i>delete</i>
+    </button>
+  </nav>
+</header>
 
-    <span>${updatedTask.title}</span>
-  </label>
-  <button class="circle transparent no-padding task-action">
-    <i>more_vert</i>
-  </button>
   `);
 });
 

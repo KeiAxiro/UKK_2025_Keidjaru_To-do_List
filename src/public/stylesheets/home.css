@@ -13,11 +13,11 @@
   @media (min-width: 768px) {
     grid-template-columns: repeat(1, 1fr);
   }
-  @media (min-width: 1200px) {
+  @media (min-width: 992px) {
     grid-template-columns: repeat(2, 1fr);
   }
   @media (min-width: 1600px) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -111,20 +111,20 @@
 /* Medium devices (≥992px) → 2 columns */
 @media (min-width: 992px) {
   #tasks-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
 /* Large devices (≥1200px) → 3 columns */
 @media (min-width: 1200px) {
   #tasks-container {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 /* Extra large devices (≥1600px) → 4 columns */
 @media (min-width: 1600px) {
   #tasks-container {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }

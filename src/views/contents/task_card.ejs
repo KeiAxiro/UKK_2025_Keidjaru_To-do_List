@@ -39,21 +39,31 @@
           { %>
       <li class="no-padding task-title" id="li-<%= task.id %>">
         <header class="no-padding task-body">
-          <nav style="gap: 0.3rem; margin-right: 0.4rem;" class="no-space">
-<label class="checkbox left-margin right-margin">
-  <input class="" type="checkbox" name="" id="">
-  <span></span>
-  </label>
-  <span class="tiny-line max">Title</span>
-
-            <button class="circle transparent">
-              <i>edit_square</i>
-            </button>
-            <button class="circle transparent">
-              <i>delete</i>
-            </button>
-          </nav>
-        </header>
+  <nav x-data="{ checked: <%= task.isCompleted %> }" style="gap: 0.3rem; margin-right: 0.4rem;" class="no-space">
+    <label class="checkbox left-margin">
+      <input 
+        type="checkbox" 
+        name="isCompleted" 
+        <%= task.isCompleted ? "checked" : "" %> 
+        hx-put="/api/tasks/toggle/<%= task.id %>" 
+        hx-vals='js:{ "isCompleted": event.target.checked }' 
+        hx-trigger="change" 
+        hx-target="#li-<%= task.id %>" 
+        hx-swap="innerHTML"
+      />
+      <span></span>
+    </label>
+    
+    <span class="small-line max tiny-margin " :class="{ 'overline': checked }"><%= task.title %></span>
+    
+    <button class="circle transparent">
+      <i>edit_square</i>
+    </button>
+    <button class="circle transparent">
+      <i>delete</i>
+    </button>
+  </nav>
+</header>
 
       </li>
 <hr>
