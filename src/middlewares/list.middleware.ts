@@ -17,7 +17,7 @@ export const getAllLists = async (req: Request, res: Response) => {
 export const createList = async (req: Request, res: Response) => {
   const { listName, listDescription } = req.body;
   try {
-    if (!listName || !listDescription) {
+    if (!listName) {
       setSnackbar(req, "Please fill all fields", "error");
       res.redirect("/api/components/root/contents/home");
       return;
@@ -56,7 +56,7 @@ export const updateList = async (req: Request, res: Response) => {
 };
 
 export const deleteList = async (req: Request, res: Response) => {
-  const { id } = req.body;
+  const { id } = req.params;
   try {
     await prisma.list.delete({ where: { id } });
     setSnackbar(req, "List Deleted Successfully!", "primary");

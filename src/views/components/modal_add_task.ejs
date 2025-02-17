@@ -1,18 +1,18 @@
-<dialog id="modalEdit" class="modal" :class="`${isModalEdit ? (isMobile ? 'top' : 'active') : ''} modal`">
-  <button @click="isModalEdit = false" hx-trigger="click" hx-target="#modalEdit" hx-swap="delete settle: 333ms" hx-get="/api/components/modaledit/<%= lists[0].id %>" type="reset" class="transparent circle large fixed right top">
+<dialog id="modalAddTask" class="modal" :class="`${isModalAddTask ? (isMobile ? 'top' : 'active') : ''} modal`">
+  <button @click="isModalAddTask = false" hx-trigger="click" hx-target="#modalAddTask" hx-swap="delete settle: 333ms" hx-get="/api/components/modalAddTask/<%= lists    .id %>" type="reset" class="transparent circle large fixed right top">
     <i class="large">close</i>
   </button>
   <div style="margin-right: 2rem">
     <!-- Tab Navigation -->
     <nav class="tabbed small grey8" x-data="{disableTaskTab: true }">
       <a :class="{ 'active ': activeModalTab === 'list', 'grey8': activeModalTab === 'task'}" @click="activeModalTab === 'list' ? activeModalTab = 'list' : 'task'">
-        <i>edit_square</i>
-        <span>Edit List</span>
+        <i>playlist_add</i>
+        <span>Add List</span>
       </a>
 
       <a :class="{ 'active ': activeModalTab === 'task', 'grey8': activeModalTab === 'list'}" @click="activeModalTab === 'task' ? activeModalTab = 'task' : 'list'">
-        <i>edit</i>
-        <span>Edit Task</span>
+        <i>add_task</i>
+        <span>Add Task</span>
       </a>
     </nav>
 
@@ -20,26 +20,26 @@
 
     <!-- Add List Form -->
     <div class="page padding" x-bind:class="{ 'active': activeModalTab === 'list' }">
-      <h5>Edit List</h5>
+      <h5>Add List</h5>
       <form id="listForm">
         <div class="field label prefix border">
           <i>title</i>
-          <input type="text" id="listName" name="listName" required value="<%= lists[0].name %>" />
+          <input type="text" id="listName" name="listName" required value="<%= lists.name %>" />
           <label>Name</label>
         </div>
 
         <div class="field label prefix border textarea">
           <i>description</i>
-          <textarea id="listDescription" name="listDescription"><%= lists[0].description %></textarea>
+          <textarea id="listDescription" name="listDescription"><%= lists.description %></textarea>
           <label>Description</label>
         </div>
 
         <footer class="fixed no-padding">
           <nav class="right-align no-space no-padding">
-            <button class="transparent link" @click="$nextTick(() => isModalEdit = false)" hx-trigger="click" hx-target="#modalEdit" hx-swap="delete settle: 333ms" hx-get="/api/components/modaledit/<%= lists[0].id %>" type="reset">
+            <button class="transparent link" @click="$nextTick(() => isModalAddTask = false)" hx-trigger="click" hx-target="#modalAddTask" hx-swap="delete settle: 333ms" hx-get="/api/components/modalAddTask/<%= lists.id %>" type="reset">
               Cancel
             </button>
-            <button class="transparent link" type="submit" hx-post="/api/lists/<%= lists[0].id %>" hx-target="#root" hx-indicator="#indicator-bar" hx-swap="innerHTML settle: 333ms" @click="$nextTick(() => isModalEdit = false)">
+            <button class="transparent link" type="submit" hx-post="/api/lists/<%= lists.id %>" hx-target="#root" hx-indicator="#indicator-bar" hx-swap="innerHTML settle: 333ms" @click="$nextTick(() => isModalAddTask = false)">
               Confirm
             </button>
           </nav>
@@ -49,20 +49,20 @@
 
     <!-- Add Task Form -->
     <div class="page padding" x-bind:class="{ 'active': activeModalTab === 'task' }">
-      <h5>Edit Task</h5>
+      <h5>Add Task</h5>
       <form id="taskForm">
         <div class="field label prefix border">
           <i>title</i>
-          <input type="text" id="taskName" name="taskName" required value="<%= task.title %>" />
+          <input type="text" id="taskName" name="taskName" required />
           <label>Title</label>
         </div>
 
         <div x-data="{ isSelectListOpen: false }" class="field label prefix border medium">
           <i>checklist</i>
-          <select x-on:focus="isSelectListOpen = true" x-on:blur="isSelectListOpen = false" id="listSelect" name="listId" disabled required>
-            <% lists.forEach((element, index) => { %>
-            <option value="<%= element.id %>" <%= index === 0 ? 'selected' : '' %>><%= element.name %></option>
-            <% }) %>
+          <select x-on:focus="isSelectListOpen = true" x-on:blur="isSelectListOpen = false" id="listSelect" name="listId" required>
+
+            <option value="<%= lists.id %>" selected><%= lists.name %></option>
+
           </select>
           <label>List</label>
           <i x-transition.duration.100ms x-text="isSelectListOpen ? 'arrow_drop_down' : 'arrow_drop_up'">
@@ -76,12 +76,12 @@
 
             <div class="field label prefix border">
               <i>calendar_month</i>
-              <input type="date" name="taskDate" required value="<%= task.date %>" />
+              <input type="date" name="taskDate" required />
               <label>Date</label>
             </div>
             <div class="field label prefix border">
               <i>schedule</i>
-              <input type="time" name="taskTime" step="60" required value="<%= task.time %>" />
+              <input type="time" name="taskTime" step="60" required />
               <label>Time</label>
             </div>
           </nav>
@@ -89,10 +89,10 @@
 
         <footer class="fixed no-padding">
           <nav class="right-align no-space no-padding">
-            <button class="transparent link" @click="$nextTick(() => isModalEdit = false)" hx-trigger="click" hx-target="#modalEdit" hx-swap="delete settle: 333ms" hx-get="/api/components/modaledit/<%= lists[0].id %>" type="reset">
+            <button class="transparent link" @click="$nextTick(() => isModalAddTask = false)" hx-trigger="click" hx-target="#modalAddTask" hx-swap="delete settle: 333ms" hx-get="/api/components/modalAddTask/<%= lists.id %>" type="reset">
               Cancel
             </button>
-            <button class="transparent link" type="submit" hx-post="/api/tasks/<%= task.id %>" hx-target="#root" hx-indicator="#indicator-bar" hx-swap="innerHTML settle: 333ms" @click="$nextTick(() => isModalEdit = false)">
+            <button class="transparent link" type="submit" hx-post="/api/tasks" hx-target="#root" hx-indicator="#indicator-bar" hx-swap="innerHTML settle: 333ms" @click="$nextTick(() => isModalAddTask = false)">
               Confirm
             </button>
           </nav>

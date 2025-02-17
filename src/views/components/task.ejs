@@ -5,54 +5,83 @@
 
   @media (min-width: 768px) {
     .task-card-one {
-      min-width: 40%;
+      min-width: 50%;
       width: fit-content;
       max-width: 100%;
     }
   }
 </style>
 <div id="tasks-container-one">
-  <article
-    id="task-<%= lists.id %>"
-    x-data="{dragIndicator: false}"
-    class="task-card-one absolute center surface-container"
-  >
+  <article id="task-<%= lists[0].id %>" x-data="{dragIndicator: false}" class="task-card-one absolute center surface-container">
     <div x-data="{isMoreOpen: false}">
-      <button
-        class="circle transparent btn-ignore absolute top-margin right"
-        style="z-index: 12121"
-        @click="isMoreOpen"
-      >
+      <button class="circle transparent btn-ignore absolute top-margin right" style="z-index: 12121" @click="isMoreOpen">
         <i class="material-icons">more_vert</i>
-      </button>
-      <menu
-        x-bind:class="isMoreOpen? 'active':''"
-        class="left no-padding border small-round surface-bright"
-        style="width: 15rem; margin-right: 1rem"
-      >
-        <nav class="drawer">
-          <a href="/api/auth/logout">
+        <menu x-bind:class="isMoreOpen" style="z-index: 1000" class="no-wrap left absolute">
+          <li hx-get="/api/components/modaledit/<%= lists[0].id %>" hx-target="#div-modalEdit" hx-swap="innerHTML" hx-indicator="#indicator-bar" @click="$nextTick(() => { isModalEdit = true; activeModalTab = 'list'; })">
             <i>edit</i>
-            <span>Edit</span>
-          </a>
-        </nav>
-      </menu>
+            <div class="max">
+              <div>Edit</div>
+            </div>
+          </li>
+          <li hx-get="/api/components/modalconfirm/<%= lists[0].id %>" hx-target="#div-modalConfirm" hx-swap="innerHTML" hx-indicator="#indicator-bar" @click="$nextTick(() => {   isModalConfirm = true; activeModalTab = 'list'; }) ">
+
+            <i>delete</i>
+            <div class="max">
+              <div>Delete</div>
+            </div>
+          </li>
+        </menu>
+      </button>
     </div>
-    <nav class="task-header" style="cursor: default">
-      <div
-        class="task-drag-indicator absolute top center"
-        x-bind:class="dragIndicator? 'active' : ''"
-      ></div>
-      <h6 class="task-title truncateLists max"><%= lists.name %></h6>
-      <div class=""></div>
-    </nav>
+    <div class="task-header bottom-margin">
+
+      <h6 class="task-title truncateLists no-margin max">
+        <%= lists[0].name %>
+      </h6>
+      <span class="no-margin grey-text truncateLists">
+        <%= lists[0].description %>
+      </span>
+    </div>
     <div class="task-body">
       <div class="task-content">
-        <p>Description</p>
-      </div>
-      <div class="task-action">
-        <a href="#">Edit</a>
-        <a href="#">Delete</a>
+        <ul class="list no-space">
+          <hr>
+          <% if (lists[0].tasks.length > 0) { %> <% tasks.forEach(task =>
+            { %>
+          <li class="no-padding task-title" id="li-<%= task.id %>">
+            <header class="no-padding task-body">
+              <nav x-data="{ checked: <%= task.isCompleted %> }" style="gap: 0.3rem; margin-right: 0.4rem;" class="no-space">
+                <label class="checkbox left-margin">
+                  <input type="checkbox" name="isCompleted" <%= task.isCompleted ? "checked" : "" %> hx-put="/api/tasks/toggle/<%= task.id %>" hx-vals='js:{ "isCompleted": event.target.checked }' hx-trigger="change" hx-target="#li-<%= task.id %>" hx-swap="innerHTML" />
+                  <span></span>
+                </label>
+
+                <span class="small-line max tiny-margin " :class="{ 'overline': checked }"><%= task.title %></span>
+
+                <button class="circle transparent" hx-get="/api/components/modaledit/<%= lists[0].id %>/<%= task.id %>" hx-target="#div-modalEdit" hx-swap="innerHTML" hx-indicator="#indicator-bar" @click="$nextTick(() => { isModalEdit = true; activeModalTab = 'task'; })">
+                  <i>edit_square</i>
+                </button>
+                <button class="circle transparent" hx-get="/api/components/modalconfirm/<%= lists[0].id %>/<%= task.id %>" hx-target="#div-modalConfirm" hx-swap="innerHTML" hx-indicator="#indicator-bar" @click="$nextTick(() => { isModalConfirm = true; activeModalTab = 'task'; })">
+                  <i>delete</i>
+                </button>
+              </nav>
+            </header>
+
+          </li>
+          <hr>
+          <% }); %> <% } else { %>
+          <li><em>No tasks yet.</em></li>
+          <% } %>
+          <li class="no-padding task-title">
+            <nav style="gap: 0.3rem; margin-right: 0.45rem;" class="no-space task-body">
+              <button class="transparent primary-text" hx-get="/api/components/modaladdtask/<%= lists[0].id %>" hx-target="#div-modalAddTask" hx-swap="innerHTML" hx-indicator="#indicator-bar" @click="$nextTick(() => { isModalAddTask = true; activeModalTab = 'task'; })">
+                <i>add_task</i>
+                <span>Add Task</span>
+              </button>
+            </nav>
+
+          </li>
+        </ul>
       </div>
     </div>
   </article>

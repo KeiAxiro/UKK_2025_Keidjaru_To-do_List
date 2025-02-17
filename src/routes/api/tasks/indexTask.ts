@@ -14,6 +14,7 @@ const router = Router();
 
 router.post("/", authenticateJWT("ALL"), async (req, res) => {
   const { listId, taskName, taskDate, taskTime } = req.body;
+  console.log(listId);
   try {
     if (!listId || !taskName || !taskDate || !taskTime) {
       setSnackbar(req, "Please fill all fields", "error");
@@ -123,7 +124,11 @@ router.put("/toggle/:id", async (req, res) => {
         @click="$nextTick(() => { isModalEdit = true; activeModalTab = 'task'; })">
       <i>edit_square</i>
     </button>
-    <button class="circle transparent">
+    <button class="circle transparent" hx-get="/api/components/modalconfirm/${
+      updatedTask.listId
+    }/${updatedTask.id}" hx-target="#div-modalConfirm" hx-swap="innerHTML"
+        hx-indicator="#indicator-bar"
+        @click="$nextTick(() => { isModalConfirm = true; activeModalTab = 'task'; })">
       <i>delete</i>
     </button>
   </nav>
@@ -133,13 +138,15 @@ router.put("/toggle/:id", async (req, res) => {
 });
 
 // Delete Task
-router.delete("/:id", async (req, res) => {
+router.get("/delete/:id", async (req, res) => {
   const { id } = req.params;
   try {
     await prisma.task.delete({ where: { id } });
-    res.json({ message: "Task deleted" });
+    setSnackbar(req, "Task Deleted Successfully!", "primary");
+    res.redirect("/api/components/root/contents/home");
   } catch {
-    res.status(404).json({ error: "Task not found" });
+    setSnackbar(req, "Failed to delete task", "error");
+    res.redirect("/api/components/root/contents/home");
   }
 });
 

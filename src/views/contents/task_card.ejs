@@ -8,7 +8,7 @@
           <div>Edit</div>
         </div>
       </li>
-      <li hx-get="/api/components/modalconfirm/<%= element.id %>" hx-target="#modalConfirm" hx-swap="outerHTML" hx-indicator="#indicator-bar" @click="$nextTick(() => { setTimeout(() => { isModalConfirm = true; activeModalTab = 'list'; }, 500); })">
+      <li hx-get="/api/components/modalconfirm/<%= element.id %>" hx-target="#div-modalConfirm" hx-swap="innerHTML" hx-indicator="#indicator-bar" @click="$nextTick(() => {   isModalConfirm = true; activeModalTab = 'list'; }) ">
 
         <i>delete</i>
         <div class="max">
@@ -47,7 +47,7 @@
             <button class="circle transparent" hx-get="/api/components/modaledit/<%= element.id %>/<%= task.id %>" hx-target="#div-modalEdit" hx-swap="innerHTML" hx-indicator="#indicator-bar" @click="$nextTick(() => { isModalEdit = true; activeModalTab = 'task'; })">
               <i>edit_square</i>
             </button>
-            <button class="circle transparent">
+            <button class="circle transparent" hx-get="/api/components/modalconfirm/<%= element.id %>/<%= task.id %>" hx-target="#div-modalConfirm" hx-swap="innerHTML" hx-indicator="#indicator-bar" @click="$nextTick(() => { isModalConfirm = true; activeModalTab = 'task'; })">
               <i>delete</i>
             </button>
           </nav>
@@ -59,9 +59,8 @@
       <li><em>No tasks yet.</em></li>
       <% } %>
       <li class="no-padding task-title">
-
         <nav style="gap: 0.3rem; margin-right: 0.45rem;" class="no-space task-body">
-          <button class="transparent primary-text">
+          <button class="transparent primary-text" hx-get="/api/components/modaladdtask/<%= element.id %>" hx-target="#div-modalAddTask" hx-swap="innerHTML" hx-indicator="#indicator-bar" @click="$nextTick(() => { isModalAddTask = true; activeModalTab = 'task'; })">
             <i>add_task</i>
             <span>Add Task</span>
           </button>

@@ -1,8 +1,9 @@
 <div id="snackbars"><%- include('components/snackbars') %></div>
 <% if (user) { %>
 <div id="modal"><%- include('components/modal_add') %>
-<%- include('components/modal_confirm') %>
-<div id="div-modalEdit"></div> 
+  <div id="div-modalAddTask"></div>
+  <div id="div-modalEdit"></div>
+  <div id="div-modalConfirm"></div>
 </div>
 
 <% } %>
@@ -10,10 +11,7 @@
   <!-- place navbar here -->
   <%- include('components/navbar_top') %>
 </header>
-<progress
-  id="indicator-bar"
-  class="no-margin no-round htmx-indicator"
-></progress>
+<progress id="indicator-bar" class="no-margin no-round htmx-indicator"></progress>
 <div class="all-container surface-container-high fixed">
   <!-- Navbar -->
   <% if (user) { %> <%- include('components/navbar_leftside') %> <% } %>

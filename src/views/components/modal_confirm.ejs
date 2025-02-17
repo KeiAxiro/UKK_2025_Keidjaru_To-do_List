@@ -1,29 +1,111 @@
-<dialog id="modalConfirm" class="modal" x-bind:class="isModalConfirm ? (isMobile ? 'top active' : 'active') : ''" x-data="">
-  <h5>Confirm Action</h5>
-  <form id="listForm">
-    <div class="field label prefix border">
-      <i>title</i>
-      <input type="text" id="listName" name="listName" required value="<%= lists[0].name %>" />
-      <label>Name</label>
-    </div>
-
-    <div class="field label prefix border textarea">
-      <i>description</i>
-      <textarea id="listDescription" name="listDescription"><%= lists[0].description %></textarea>
-      <label>Description</label>
-    </div>
-
-    <footer class="fixed no-padding">
-      <nav class="right-align no-space no-padding">
-        <button class="transparent link" @click="$nextTick(() => isModalConfirm = false)" type="reset">
-          Cancel
-        </button>
-        <button class="transparent link" type="submit" hx-post="/api/lists/<%= lists[0].id %>" hx-target="#root" hx-indicator="#indicator-bar" hx-swap="innerHTML settle: 333ms" @click="$nextTick(() => isModalConfirm = false)">
-          Confirm
-        </button>
-      </nav>
-    </footer>
-  </form>
+<dialog id="modalConfirm" class="modal" :class="`${isModalConfirm ? (isMobile ? 'top' : 'active') : ''} modal`">
+  <button @click="isModalConfirm = false" hx-trigger="click" hx-target="#modalConfirm" hx-swap="delete settle: 333ms" hx-get="/api/components/modalconfirm/<%= lists[0].id %>" type="reset" class="transparent circle large fixed right top">
+    <i class="large">close</i>
   </button>
-  </nav>
+  <div style="margin-right: 2rem">
+    <!-- Tab Navigation -->
+    <nav class="tabbed small grey8" x-data="{disableTaskTab: true }">
+      <a :class="{ 'active ': activeModalTab === 'list', 'grey8': activeModalTab === 'task'}" @click="activeModalTab === 'list' ? activeModalTab = 'list' : 'task'">
+        <i>checklist</i>
+        <span>List</span>
+      </a>
+
+      <a :class="{ 'active ': activeModalTab === 'task', 'grey8': activeModalTab === 'list'}" @click="activeModalTab === 'task' ? activeModalTab = 'task' : 'list'">
+        <i>task_alt</i>
+        <span>Task</span>
+      </a>
+    </nav>
+
+
+
+    <!-- Add List Form -->
+    <div class="page padding" x-bind:class="{ 'active': activeModalTab === 'list' }">
+      <h5>Are you sure want to delete this List?</h5>
+      <form id="listForm">
+        <div class="field label prefix border">
+          <i>title</i>
+          <input type="text" id="listName" name="listName" required value="<%= lists[0].name %>" disabled />
+          <label>Name</label>
+        </div>
+
+        <div class="field label prefix border textarea">
+          <i>description</i>
+          <textarea id="listDescription" name="listDescription" disabled><%= lists[0].description %></textarea>
+          <label>Description</label>
+        </div>
+
+        <footer class="fixed no-padding">
+          <nav class="right-align no-space no-padding">
+            <button class="transparent link" @click="$nextTick(() => isModalConfirm = false)" hx-trigger="click" hx-target="#modalConfirm" hx-swap="delete settle: 333ms" hx-get="/api/components/modalconfirm/<%= lists[0].id %>" type="reset">
+              Cancel
+            </button>
+            <button class="transparent link error" type="submit" hx-get="/api/lists/delete/<%= lists[0].id %>" hx-target="#root" hx-indicator="#indicator-bar" hx-swap="innerHTML settle: 333ms" @click="$nextTick(() => isModalConfirm = false)">
+              <span class="error">
+                Delete
+
+              </span>
+            </button>
+          </nav>
+        </footer>
+      </form>
+    </div>
+
+    <!-- Add Task Form -->
+    <div class="page padding" x-bind:class="{ 'active': activeModalTab === 'task' }">
+      <h5>Are you sure want to delete this Task?</h5>
+      <form id="taskForm">
+        <div class="field label prefix border">
+          <i>title</i>
+          <input type="text" id="taskName" name="taskName" required value="<%= task.title %>" disabled />
+          <label>Title</label>
+        </div>
+
+        <div x-data="{ isSelectListOpen: false }" class="field label prefix border medium">
+          <i>checklist</i>
+          <select x-on:focus="isSelectListOpen = true" x-on:blur="isSelectListOpen = false" id="listSelect" name="listId" disabled required>
+            <% lists.forEach((element, index) => { %>
+            <option value="<%= element.id %>" <%= index === 0 ? 'selected' : '' %>><%= element.name %></option>
+            <% }) %>
+          </select>
+          <label>List</label>
+          <i x-transition.duration.100ms x-text="isSelectListOpen ? 'arrow_drop_down' : 'arrow_drop_up'">
+            arrow_drop_up
+          </i>
+        </div>
+
+        <fieldset>
+          <legend>Due Time</legend>
+          <nav>
+
+            <div class="field label prefix border">
+              <i>calendar_month</i>
+              <input type="date" name="taskDate" required value="<%= task.date %>" disabled />
+              <label>Date</label>
+            </div>
+            <div class="field label prefix border">
+              <i>schedule</i>
+              <input type="time" name="taskTime" step="60" required value="<%= task.time %>" disabled />
+              <label>Time</label>
+            </div>
+          </nav>
+        </fieldset>
+
+        <footer class="fixed no-padding">
+          <nav class="right-align no-space no-padding">
+            <button class="transparent link" @click="$nextTick(() => isModalConfirm = false)" hx-trigger="click" hx-target="#modalConfirm" hx-swap="delete settle: 333ms" hx-get="/api/components/modalconfirm/<%= lists[0].id %>" type="reset">
+              Cancel
+            </button>
+            <button class="transparent link error" type="submit" hx-get="/api/tasks/delete/<%= task.id %>" hx-target="#root" hx-indicator="#indicator-bar" hx-swap="innerHTML settle: 333ms" @click="$nextTick(() => isModalConfirm = false)">
+              <span class="error">
+
+                Delete
+              </span>
+            </button>
+          </nav>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
 </dialog>
