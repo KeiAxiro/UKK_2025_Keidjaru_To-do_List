@@ -1,6 +1,9 @@
 <div id="snackbars"><%- include('components/snackbars') %></div>
 <% if (user) { %>
-<div id="modal"><%- include('components/modal_add') %></div>
+<div id="modal"><%- include('components/modal_add') %>
+<div id="modalEdit"></div> 
+</div>
+
 <% } %>
 <header class="surface-container-high fixed" id="header-top">
   <!-- place navbar here -->
@@ -16,6 +19,6 @@
 
   <!-- Konten Utama -->
   <main x-bind:class="{ 'active': isMenuOpen }">
-    <div x-transition="" id="res"><%- include(vContent) %></div>
+    <div id="res"><%- include(vContent) %></div>
   </main>
 </div>

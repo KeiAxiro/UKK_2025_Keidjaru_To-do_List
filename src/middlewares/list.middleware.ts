@@ -38,3 +38,19 @@ export const createList = async (req: Request, res: Response) => {
     res.status(500).json({ error });
   }
 };
+
+export const updateList = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { listName, listDescription } = req.body;
+  try {
+    const list = await prisma.list.update({
+      where: { id: id },
+      data: { name: listName, description: listDescription },
+    });
+    setSnackbar(req, "List Updated Successfully!", "primary");
+    res.redirect("/api/components/root/contents/home");
+  } catch (error) {
+    setSnackbar(req, "Failed to update list", "error");
+    res.redirect("/api/components/root/contents/home");
+  }
+};

@@ -87,10 +87,9 @@ router.put("/toggle/:id", async (req, res) => {
 
     <span>${updatedTask.title}</span>
   </label>
-  <div class="task-action">
-    <a href="#">Edit</a>
-    <a href="#">Delete</a>
-  </div>
+  <button class="circle transparent no-padding task-action">
+    <i>more_vert</i>
+  </button>
   `);
 });
 

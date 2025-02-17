@@ -146,6 +146,51 @@ router.get("/login", (req: Request, res: Response) => {
 router.get("/register", (req: Request, res: Response) => {
   res.render("auth/register", { regUser: {} });
 });
+router.get(
+  "/modaledit/:id",
+  async (req: Request & { user: any }, res: Response) => {
+    try {
+      const lists = await prisma.list.findMany({
+        where: { id: req.params.id },
+      });
+
+      const taskCounts = await prisma.task.groupBy({
+        by: ["listId"],
+        _count: { id: true },
+      });
+
+      const taskCountMap = taskCounts.reduce((acc, item) => {
+        acc[item.listId] = item._count.id;
+        return acc;
+      }, {} as Record<number, number>);
+
+      const tasks = await prisma.task.findMany({
+        where: { listId: { in: lists.map((list) => list.id) } },
+      });
+
+      const taskMap = tasks.reduce((acc, task) => {
+        if (!acc[task.listId]) acc[task.listId] = [];
+        acc[task.listId].push(task);
+        return acc;
+      }, {} as Record<number, typeof tasks>);
+
+      const listsWithDetails = lists.map((list) => ({
+        ...list,
+        taskCount: taskCountMap[list.id] || 0,
+        tasks: taskMap[list.id] || [],
+      }));
+
+      listsWithDetails.sort((a, b) => b.taskCount - a.taskCount);
+
+      // ✅ Render dengan data yang benar
+      res.render("components/modal_edit", { lists: listsWithDetails });
+    } catch (error) {
+      console.error("Error fetching lists:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+);
+
 router.get("/modaladd", (req: Request, res: Response) => {
   res.render("components/modal_add", { regUser: {} });
 });

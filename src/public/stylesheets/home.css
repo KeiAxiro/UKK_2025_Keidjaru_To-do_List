@@ -26,9 +26,9 @@
   padding: 0;
   height: auto;
   max-width: 100%;
-  min-height: 25rem;
+  min-height: 22.5rem;
   border-top: 0;
-  transition: box-shadow 0.4s ease, border-top 0.3s ease-in-out;
+  transition: box-shadow 0.2s ease, border-top 0.2s ease-in-out;
   will-change: transform, opacity, box-shadow;
 }
 .task-card.dropped {
@@ -51,13 +51,12 @@
   margin: 0;
   cursor: grab;
   padding: 1rem;
-  padding-right: 0.5rem;
+  padding-right: 0rem;
   padding-bottom: 0;
 }
 
 .task-body {
-  padding: 1rem;
-  padding-top: 0;
+  min-block-size: 0;
 }
 
 .task-drag-indicator {
@@ -76,8 +75,8 @@
   display: flex;
 }
 
-.task-menu-more {
-  width: 210rem;
+.list > li.task-title {
+  display: block;
 }
 
 .truncateLists {
@@ -87,7 +86,7 @@
   display: block;
   max-width: 100%;
   padding-right: 3rem;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
 }
 .notr {
   white-space: initial;
@@ -96,7 +95,7 @@
   display: initial;
   max-width: initial;
   padding-right: initial;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
 }
 
 @media (min-width: 768px) {

@@ -2,7 +2,7 @@
   font-size: small;
   z-index: 1080;
   transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transition-delay: 0.3s;
+  transition-delay: 0.2s;
 }
 
 .helper.login {
@@ -13,14 +13,14 @@ i {
   translate: no;
 }
 
-#modalAdd {
+dialog.modal {
   width: 100%;
   display: table !important;
   overflow-y: auto;
 }
 
 @media (min-width: 768px) {
-  #modalAdd {
+  dialog.modal {
     width: 55vw;
   }
 }

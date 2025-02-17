@@ -1,10 +1,12 @@
 <dialog
-  id="modalAdd"
+  id="modalEdit"
   class="modal"
-  x-bind:class="isModalAdd ? (isMobile ? 'top active' : 'active') : ''"
+  hx-confirm=""
+
+  :class="`${isModalEdit ? (isMobile ? 'top' : 'active') : ''} modal`"
 >
   <button
-    @click="isModalAdd = false"
+    @click="isModalEdit = false"
     class="transparent circle large fixed right top"
   >
     <i class="large">close</i>
@@ -16,15 +18,15 @@
         :class="{ 'active': activeModalTab === 'list' }"
         @click="activeModalTab = 'list'"
       >
-        <i>playlist_add</i>
-        <span>Add List</span>
+        <i>edit_square</i>
+        <span>Edit List</span>
       </a>
       <a
         :class="{ 'active': activeModalTab === 'task' }"
         @click="activeModalTab = 'task'"
       >
-        <i>add_task</i>
-        <span>Add Task</span>
+        <i>edit</i>
+        <span>Edit Task</span>
       </a>
     </nav>
 
@@ -33,17 +35,17 @@
       class="page padding"
       x-bind:class="{ 'active': activeModalTab === 'list' }"
     >
-      <h5>Add List</h5>
+      <h5>Edit List</h5>
       <form id="listForm">
         <div class="field label prefix border">
           <i>title</i>
-          <input type="text" id="listName" name="listName" required />
+          <input type="text" id="listName" name="listName" required value="<%= lists[0].name %>"/>
           <label>Name</label>
         </div>
 
         <div class="field label prefix border textarea">
           <i>description</i>
-          <textarea class="min" id="listDescription" name="listDescription"></textarea>
+          <textarea id="listDescription" name="listDescription" ><%= lists[0].description %></textarea>
           <label>Description</label>
         </div>
 
@@ -51,19 +53,19 @@
           <nav class="right-align no-space no-padding">
             <button
               class="transparent link"
-              @click="isModalAdd = false"
-              type="button"
+              @click="$nextTick(() => isModalEdit = false)"
+              type="reset"
             >
               Cancel
             </button>
             <button
               class="transparent link"
               type="submit"
-              hx-post="/api/lists"
+              hx-post="/api/lists/<%= lists[0].id %>"
               hx-target="#root"
               hx-indicator="#indicator-bar"
               hx-swap="innerHTML settle: 333ms"
-              @click="$nextTick(() => isModalAdd = false)"
+              @click="$nextTick(() => isModalEdit = false)"
             >
               Confirm
             </button>
@@ -77,24 +79,31 @@
       class="page padding"
       x-bind:class="{ 'active': activeModalTab === 'task' }"
     >
-      <h5>Add Task</h5>
+      <h5>Edit Task</h5>
       <form id="taskForm">
+        <div class="field label prefix border">
+          <i>title</i>
+          <input type="text" id="taskName" name="taskName" required />
+          <label>Title</label>
+        </div>
+
         <div
           x-data="{ isSelectListOpen: false }"
-          class="field label prefix border bordermedium"
+          class="field label prefix border medium"
         >
         <i>checklist</i>
-          <select
+            <select
             x-on:focus="isSelectListOpen = true"
             x-on:blur="isSelectListOpen = false"
             id="listSelect"
             name="listId"
+            disabled
             required
-          >
-            <% lists.forEach(element => { %>
-            <option value="<%= element.id %>"><%= element.name %></option>
+            >
+            <% lists.forEach((element, index) => { %>
+            <option value="<%= element.id %>" <%= index === 0 ? 'selected' : '' %>><%= element.name %></option>
             <% }) %>
-          </select>
+            </select>
           <label>List</label>
           <i
             x-transition.duration.100ms
@@ -103,12 +112,6 @@
             arrow_drop_up
           </i>
         </div>
-        <div class="field label prefix border">
-          <i>title</i>
-          <input type="text" id="taskName" name="taskName" required />
-          <label>Title</label>
-        </div>
-
 
         <fieldset>
           <legend>Due Time  </legend>
@@ -129,7 +132,7 @@
 
         <footer class="fixed no-padding">
           <nav class="right-align no-space no-padding">
-            <button class="transparent link" @click="isModalAdd = false">
+            <button class="transparent link" @click="isModalEdit = false">
               Cancel
             </button>
             <button
@@ -139,7 +142,7 @@
               hx-target="#root"
               hx-indicator="#indicator-bar"
               hx-swap="innerHTML settle: 333ms"
-              @click="$nextTick(() => isModalAdd = false)"
+              @click="$nextTick(() => isModalEdit = false)"
             >
               Confirm
             </button>
