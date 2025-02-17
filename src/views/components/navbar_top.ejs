@@ -27,7 +27,7 @@
   </button>
   <% if (user) { %>
   <button class="circle transparent border" @click="isMoreOpen = true">
-    <img class="responsive" src="/images/logo.png" />
+    <img class="responsive" loading="lazy" src="https://ui-avatars.com/api/?name=<%= user.nama %>&size=128&background=8f8f8f&color=fff&bold=true" />
   </button>
   <menu
     id="menu-more"
@@ -37,7 +37,7 @@
     @click.outside="isMoreOpen = false"
   >
     <div class="row">
-      <img class="circle large" src="/images/logo.png" />
+      <img class="circle large" loading="lazy" src="https://ui-avatars.com/api/?name=<%= user.nama %>&size=128&background=8f8f8f&color=fff&bold=true" />
       <div class="max">
         <h6><%= user.nama %></h6>
         <span><%= user.email %></span>
