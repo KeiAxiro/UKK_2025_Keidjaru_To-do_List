@@ -87,7 +87,6 @@ export const registerAuth = async (
       "error"
     );
     return res.redirect("/api/components/root/auth/register");
-    return;
   }
 
   try {
