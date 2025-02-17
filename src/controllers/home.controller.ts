@@ -2,6 +2,7 @@ import { Response, Request } from "express";
 import prisma from "../prisma/clients/indexPrisma.js";
 import { count } from "console";
 import { setSnackbar } from "../middlewares/snackbars.middleware.js";
+import { getUserListsWithTasks } from "../middlewares/list.middleware.js";
 
 export const homeController = async (
   req: Request & { user?: any },
@@ -18,44 +19,7 @@ export const homeController = async (
 
   try {
     // Ambil semua lists berdasarkan userId
-    const lists = await prisma.list.findMany({
-      where: {
-        userId: req.user.id,
-      },
-    });
-
-    // Ambil jumlah task per list dengan groupBy (lebih cepat dari Promise.all)
-    const taskCounts = await prisma.task.groupBy({
-      by: ["listId"],
-      _count: { id: true },
-    });
-
-    // Buat mapping dari listId ke jumlah task
-    const taskCountMap = taskCounts.reduce((acc, item) => {
-      acc[item.listId] = item._count.id;
-      return acc;
-    }, {} as Record<number, number>);
-
-    // Ambil semua task berdasarkan listId yang ada
-    const tasks = await prisma.task.findMany({
-      where: {
-        listId: { in: lists.map((list) => list.id) },
-      },
-    });
-
-    // Buat mapping listId ke array task
-    const taskMap = tasks.reduce((acc, task) => {
-      if (!acc[task.listId]) acc[task.listId] = [];
-      acc[task.listId].push(task);
-      return acc;
-    }, {} as Record<number, typeof tasks>);
-
-    // Gabungkan data list dengan jumlah task dan isi task
-    const listsWithDetails = lists.map((list) => ({
-      ...list,
-      taskCount: taskCountMap[list.id] || 0, // Jika tidak ada task, default 0
-      tasks: taskMap[list.id] || [], // Jika tidak ada task, default array kosong
-    }));
+    const listsWithDetails = await getUserListsWithTasks(req.user.id as string);
 
     // Urutkan berdasarkan banyaknya task (descending)
     listsWithDetails.sort((a, b) => b.taskCount - a.taskCount);

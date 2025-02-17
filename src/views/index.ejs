@@ -24,15 +24,24 @@
 
   <body class="background">
     <div
-  x-data="{ isMenuOpen: JSON.parse(localStorage.getItem('isMenuOpen') || false), 
-  toggleMenu() { 
-      this.isMenuOpen = !this.isMenuOpen;
-      localStorage.setItem('isMenuOpen', this.isMenuOpen);
-  } , isMoreOpen: false, isLoginOpen: false,isModalEdit: true, isModalAdd: false, 
-    isMobile: window.innerWidth <= 768, 
-    activeModalTab: 'list'}"
-  id="root"
->
+    x-data="{ 
+      isMenuOpen: JSON.parse(localStorage.getItem('isMenuOpen') || 'false'), 
+      toggleMenu() { 
+        this.isMenuOpen = !this.isMenuOpen;
+        localStorage.setItem('isMenuOpen', this.isMenuOpen);
+      }, 
+      isMoreOpen: false, 
+      isLoginOpen: false, 
+      isModalEdit: true, 
+      isModalConfirm: false, 
+      listId: localStorage.getItem('listId') || '',  // Persist listId
+      isModalAdd: false, 
+      isMobile: window.innerWidth <= 768, 
+      activeModalTab: 'list'
+    }"
+    id="root"
+  >
+  
     <%- include('body_root') %>
  <div></div>
     <script src="/javascripts/script.js"></script>

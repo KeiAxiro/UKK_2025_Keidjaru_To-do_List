@@ -32,14 +32,12 @@
     </a>
 
     <a
-      hx-get="/api/components/trash"
-      hx-target="#res"
-      hx-indicator="#indicator-bar"
-      :class="{ 'primary': activeMenuTab === 'trash' }"
-      @click="activeMenuTab = 'trash'"
+      :class="{ 'primary': activeMenuTab === 'addlist' }"
+
+      @click="activeMenuTab = 'addlist';isModalAdd=true;activeModalTab='list'"
     >
-      <i>delete</i>
-      <span>Trash</span>
+      <i>playlist_add</i>
+      <span>Add List</span>
     </a>
     <hr class="top-margin bottom-margin" />
 

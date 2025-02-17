@@ -1,34 +1,41 @@
 <dialog
   id="modalEdit"
   class="modal"
-  hx-confirm=""
 
   :class="`${isModalEdit ? (isMobile ? 'top' : 'active') : ''} modal`"
 >
   <button
     @click="isModalEdit = false"
+    hx-trigger="click"
+    hx-target="#modalEdit"
+    hx-swap="delete settle: 333ms"
+    hx-get="/api/components/modaledit/<%= lists[0].id %>"
+    type="reset"
     class="transparent circle large fixed right top"
   >
     <i class="large">close</i>
   </button>
   <div style="margin-right: 2rem">
     <!-- Tab Navigation -->
-    <nav class="tabbed small">
-      <a
-        :class="{ 'active': activeModalTab === 'list' }"
-        @click="activeModalTab = 'list'"
+    <nav class="tabbed small" x-data="{disableTaskTab: true }">
+      <a 
+        :class="{ 'active ': activeModalTab === 'list', 'grey8': activeModalTab === 'task'}"
+        @click="activeModalTab === 'list' ? activeModalTab = 'list' : 'task'"
       >
         <i>edit_square</i>
         <span>Edit List</span>
       </a>
-      <a
-        :class="{ 'active': activeModalTab === 'task' }"
-        @click="activeModalTab = 'task'"
+    
+      <a 
+        :class="{ 'active ': activeModalTab === 'task', 'grey8': activeModalTab === 'list'}" 
+        @click="activeModalTab === 'task' ? activeModalTab = 'task' : 'list'"
       >
         <i>edit</i>
         <span>Edit Task</span>
       </a>
     </nav>
+    
+    
 
     <!-- Add List Form -->
     <div
@@ -54,6 +61,10 @@
             <button
               class="transparent link"
               @click="$nextTick(() => isModalEdit = false)"
+              hx-trigger="click"
+              hx-target="#modalEdit"
+              hx-swap="delete settle: 333ms"
+              hx-get="/api/components/modaledit/<%= lists[0].id %>"
               type="reset"
             >
               Cancel
@@ -83,7 +94,7 @@
       <form id="taskForm">
         <div class="field label prefix border">
           <i>title</i>
-          <input type="text" id="taskName" name="taskName" required />
+          <input type="text" id="taskName" name="taskName" required value="<%= task.title %>" />
           <label>Title</label>
         </div>
 
@@ -114,17 +125,17 @@
         </div>
 
         <fieldset>
-          <legend>Due Time  </legend>
+          <legend>Due Time</legend>
           <nav>
 
             <div class="field label prefix border">
               <i>calendar_month</i>
-              <input type="date" name="taskDate" required />
+              <input type="date" name="taskDate" required value="<%= task.date %>"/>
             <label>Date</label>
           </div>
           <div class="field label prefix border">
             <i>schedule</i>
-            <input type="time" name="taskTime" step="60" required />
+            <input type="time" name="taskTime" step="60" required value="<%= task.time %>"/>
             <label>Time</label>
           </div>
         </nav>
@@ -132,13 +143,19 @@
 
         <footer class="fixed no-padding">
           <nav class="right-align no-space no-padding">
-            <button class="transparent link" @click="isModalEdit = false">
+            <button class="transparent link"
+            @click="$nextTick(() => isModalEdit = false)"
+              hx-trigger="click"
+              hx-target="#modalEdit"
+              hx-swap="delete settle: 333ms"
+              hx-get="/api/components/modaledit/<%= lists[0].id %>"
+              type="reset">
               Cancel
             </button>
             <button
               class="transparent link"
               type="submit"
-              hx-post="/api/tasks"
+              hx-post="/api/tasks/<%= task.id %>"
               hx-target="#root"
               hx-indicator="#indicator-bar"
               hx-swap="innerHTML settle: 333ms"

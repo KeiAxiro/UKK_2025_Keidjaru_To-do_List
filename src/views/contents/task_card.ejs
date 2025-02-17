@@ -3,16 +3,21 @@
     @click="isMoreOpen<%= i %>">
     <i class="material-icons">more_vert</i>
     <menu x-bind:class="isMoreOpen<%= i %>" style="z-index: 1000" class="no-wrap left absolute">
-      <li hx-get="/api/components/modaledit/<%= element.id %>" hx-target="#modalEdit" hx-swap="outerHTML"
+      <li hx-get="/api/components/modaledit/<%= element.id %>" hx-target="#div-modalEdit" hx-swap="innerHTML"
         hx-indicator="#indicator-bar"
-        @click="$nextTick(() => { setTimeout(() => { isModalEdit = true; activeModalTab = 'list'; }, 500); })">
+        @click="$nextTick(() => { isModalEdit = true; activeModalTab = 'list'; })">
         <i>edit</i>
         <div class="max">
           <div>Edit</div>
         </div>
       </li>
-      <li hx-confirm="Are you sure?" hx-delete="/api/lists/<%= element.id %>" hx-target="#root" hx-swap="innerHTML"
-        hx-indicator="#indicator-bar">
+      <li 
+        hx-get="/api/components/modalconfirm/<%= element.id %>"
+        hx-target="#modalConfirm" 
+        hx-swap="outerHTML"
+        hx-indicator="#indicator-bar" 
+        @click="$nextTick(() => { setTimeout(() => { isModalConfirm = true; activeModalTab = 'list'; }, 500); })">
+
         <i>delete</i>
         <div class="max">
           <div>Delete</div>
@@ -56,7 +61,9 @@
     
     <span class="small-line max tiny-margin " :class="{ 'overline': checked }"><%= task.title %></span>
     
-    <button class="circle transparent">
+    <button class="circle transparent" hx-get="/api/components/modaledit/<%= element.id %>/<%= task.id %>" hx-target="#div-modalEdit" hx-swap="innerHTML"
+        hx-indicator="#indicator-bar"
+        @click="$nextTick(() => { isModalEdit = true; activeModalTab = 'task'; })">
       <i>edit_square</i>
     </button>
     <button class="circle transparent">

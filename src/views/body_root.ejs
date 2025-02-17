@@ -1,7 +1,8 @@
 <div id="snackbars"><%- include('components/snackbars') %></div>
 <% if (user) { %>
 <div id="modal"><%- include('components/modal_add') %>
-<div id="modalEdit"></div> 
+<%- include('components/modal_confirm') %>
+<div id="div-modalEdit"></div> 
 </div>
 
 <% } %>

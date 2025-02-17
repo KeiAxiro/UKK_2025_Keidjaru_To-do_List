@@ -1,0 +1,43 @@
+<dialog id="modalConfirm" class="modal" 
+  x-bind:class="isModalConfirm ? (isMobile ? 'top active' : 'active') : ''"
+  x-data="">
+  <h5>Confirm Action</h5>
+  <form id="listForm">
+    <div class="field label prefix border">
+      <i>title</i>
+      <input type="text" id="listName" name="listName" required value="<%= lists[0].name %>"/>
+      <label>Name</label>
+    </div>
+
+    <div class="field label prefix border textarea">
+      <i>description</i>
+      <textarea id="listDescription" name="listDescription" ><%= lists[0].description %></textarea>
+      <label>Description</label>
+    </div>
+
+    <footer class="fixed no-padding">
+      <nav class="right-align no-space no-padding">
+        <button
+          class="transparent link"
+          @click="$nextTick(() => isModalConfirm = false)"
+          type="reset"
+        >
+          Cancel
+        </button>
+        <button
+          class="transparent link"
+          type="submit"
+          hx-post="/api/lists/<%= lists[0].id %>"
+          hx-target="#root"
+          hx-indicator="#indicator-bar"
+          hx-swap="innerHTML settle: 333ms"
+          @click="$nextTick(() => isModalConfirm = false)"
+        >
+          Confirm
+        </button>
+      </nav>
+    </footer>
+  </form>
+    </button>
+  </nav>
+</dialog>

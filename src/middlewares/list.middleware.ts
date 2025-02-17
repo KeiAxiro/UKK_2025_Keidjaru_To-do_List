@@ -54,3 +54,89 @@ export const updateList = async (req: Request, res: Response) => {
     res.redirect("/api/components/root/contents/home");
   }
 };
+
+export const deleteList = async (req: Request, res: Response) => {
+  const { id } = req.body;
+  try {
+    await prisma.list.delete({ where: { id } });
+    setSnackbar(req, "List Deleted Successfully!", "primary");
+    res.redirect("/api/components/root/contents/home");
+  } catch (error) {
+    setSnackbar(req, "Failed to delete list", "error");
+    res.redirect("/api/components/root/contents/home");
+  }
+};
+
+export const getUserListsWithTasks = async (userId: string) => {
+  if (!userId) throw new Error("User ID is required");
+
+  const lists = await prisma.list.findMany({
+    where: { userId },
+    orderBy: { updatedAt: "desc" },
+  });
+
+  const taskCounts = await prisma.task.groupBy({
+    by: ["listId"],
+    _count: { id: true },
+  });
+
+  const taskCountMap = taskCounts.reduce(
+    (acc, item) => ({ ...acc, [item.listId]: item._count.id }),
+    {} as Record<number, number>
+  );
+
+  const tasks = await prisma.task.findMany({
+    where: { listId: { in: lists.map((list) => list.id) } },
+  });
+
+  const taskMap = tasks.reduce((acc, task) => {
+    if (!acc[task.listId]) acc[task.listId] = [];
+    acc[task.listId].push(task);
+    return acc;
+  }, {} as Record<number, typeof tasks>);
+
+  return lists.map((list) => ({
+    ...list,
+    taskCount: taskCountMap[list.id] || 0,
+    tasks: taskMap[list.id] || [],
+  }));
+};
+
+export const getListWithTasks = async (listId: string) => {
+  if (!listId) throw new Error("List ID is required");
+
+  const lists = await prisma.list.findMany({
+    where: { id: listId },
+    orderBy: { updatedAt: "desc" },
+  });
+
+  if (lists.length === 0) throw new Error("List not found");
+
+  const taskCounts = await prisma.task.groupBy({
+    by: ["listId"],
+    _count: { id: true },
+  });
+
+  const taskCountMap = taskCounts.reduce(
+    (acc, item) => ({ ...acc, [item.listId]: item._count.id }),
+    {} as Record<number, number>
+  );
+
+  const tasks = await prisma.task.findMany({
+    where: { listId: { in: lists.map((list) => list.id) } },
+  });
+
+  const taskMap = tasks.reduce((acc, task) => {
+    if (!acc[task.listId]) acc[task.listId] = [];
+    acc[task.listId].push(task);
+    return acc;
+  }, {} as Record<number, typeof tasks>);
+
+  const listsWithDetails = lists.map((list) => ({
+    ...list,
+    taskCount: taskCountMap[list.id] || 0,
+    tasks: taskMap[list.id] || [],
+  }));
+
+  return listsWithDetails;
+};

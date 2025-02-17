@@ -21,6 +21,7 @@ router.post("/", authenticateJWT("ALL"), async (req, res) => {
       return;
     }
     const dueDate = new Date(`${taskDate}T${taskTime}:00.000Z`);
+    console.log(taskDate, taskTime, dueDate);
     const task = await prisma.task.create({
       data: { listId, title: taskName, dueDate },
     });
@@ -46,17 +47,39 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update Task
-router.put("/:id", async (req, res) => {
+router.post("/:id", authenticateJWT("ALL"), async (req, res) => {
+  const { taskName, taskDate, taskTime } = req.body;
   const { id } = req.params;
-  const { title, description, isCompleted, dueDate } = req.body;
+
+  console.log(taskName, taskDate, taskTime);
+  // Check if the necessary fields are present
+  if (!id || !taskName || !taskDate || !taskTime) {
+    setSnackbar(req, "Please fill all fields", "error");
+    res.redirect("/api/components/root/contents/home");
+    return;
+  }
+
+  // Create the dueDate from taskDate and taskTime
+  const dueDate = new Date(`${taskDate}T${taskTime}`);
+  console.log(taskDate, taskTime, dueDate);
   try {
-    const task = await prisma.task.update({
-      where: { id },
-      data: { title, isCompleted, dueDate },
-    });
-    res.json(task);
-  } catch {
-    res.status(404).json({ error: "Task not found" });
+    if (id) {
+      // Update task if id is provided
+      const task = await prisma.task.update({
+        where: { id },
+        data: { title: taskName, dueDate },
+      });
+
+      setSnackbar(req, "Task Updated Successfully!", "primary");
+      res.redirect("/api/components/root/contents/home");
+    } else {
+      setSnackbar(req, "Task not found", "error");
+      res.redirect("/api/components/root/contents/home");
+    }
+  } catch (error) {
+    console.error(error);
+    setSnackbar(req, "Failed to save task", "error");
+    res.redirect("/api/components/root/contents/home");
   }
 });
 
@@ -74,12 +97,12 @@ router.put("/toggle/:id", async (req, res) => {
 <header class="no-padding task-body">
   <nav x-data="{ checked: ${
     updatedTask.isCompleted
-  } }" style="gap: 0.3rem; margin-right: 0.4rem;" class="no-space">
+  }}" style="gap: 0.3rem; margin-right: 0.4rem;" class="no-space">
     <label class="checkbox left-margin">
       <input 
         type="checkbox" 
         name="isCompleted" 
-        ${updatedTask.isCompleted ? "checked" : ""} 
+        ${updatedTask.isCompleted ? "checked" : ""}
         hx-put="/api/tasks/toggle/${updatedTask.id}" 
         hx-vals='js:{ "isCompleted": event.target.checked }' 
         hx-trigger="change" 
@@ -89,11 +112,15 @@ router.put("/toggle/:id", async (req, res) => {
       <span></span>
     </label>
     
-    <span :class="{ 'overline': checked }" class="small-line max tiny-margin">${
+    <span class="small-line max tiny-margin " :class="{ 'overline': checked }">${
       updatedTask.title
     }</span>
     
-    <button class="circle transparent">
+    <button class="circle transparent" hx-get="/api/components/modaledit/${
+      updatedTask.listId
+    }/${updatedTask.id}" hx-target="#div-modalEdit" hx-swap="innerHTML"
+        hx-indicator="#indicator-bar"
+        @click="$nextTick(() => { isModalEdit = true; activeModalTab = 'task'; })">
       <i>edit_square</i>
     </button>
     <button class="circle transparent">

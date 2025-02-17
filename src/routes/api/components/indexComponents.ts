@@ -1,7 +1,15 @@
 import { Router, Request, Response } from "express";
-import { snackbar } from "../../../middlewares/snackbars.middleware.js";
+import {
+  setSnackbar,
+  snackbar,
+} from "../../../middlewares/snackbars.middleware.js";
 import prisma from "../../../prisma/clients/indexPrisma.js";
 import { authenticateJWT } from "../../../middlewares/auth.middleware.js";
+import {
+  getListWithTasks,
+  getUserListsWithTasks,
+} from "../../../middlewares/list.middleware.js";
+import { promises } from "dns";
 
 const router = Router();
 
@@ -26,47 +34,9 @@ router.get(
 
     try {
       // Ambil semua lists berdasarkan userId
-      const lists = await prisma.list.findMany({
-        where: {
-          userId: req.user.id,
-        },
-      });
-
-      // Ambil jumlah task per list dengan groupBy (lebih cepat dari Promise.all)
-      const taskCounts = await prisma.task.groupBy({
-        by: ["listId"],
-        _count: { id: true },
-      });
-
-      // Buat mapping dari listId ke jumlah task
-      const taskCountMap = taskCounts.reduce((acc, item) => {
-        acc[item.listId] = item._count.id;
-        return acc;
-      }, {} as Record<number, number>);
-
-      // Ambil semua task berdasarkan listId yang ada
-      const tasks = await prisma.task.findMany({
-        where: {
-          listId: { in: lists.map((list) => list.id) },
-        },
-      });
-
-      // Buat mapping listId ke array task
-      const taskMap = tasks.reduce((acc, task) => {
-        if (!acc[task.listId]) acc[task.listId] = [];
-        acc[task.listId].push(task);
-        return acc;
-      }, {} as Record<number, typeof tasks>);
-
-      // Gabungkan data list dengan jumlah task dan isi task
-      const listsWithDetails = lists.map((list) => ({
-        ...list,
-        taskCount: taskCountMap[list.id] || 0, // Jika tidak ada task, default 0
-        tasks: taskMap[list.id] || [], // Jika tidak ada task, default array kosong
-      }));
-
-      // Urutkan berdasarkan banyaknya task (descending)
-      listsWithDetails.sort((a, b) => b.taskCount - a.taskCount);
+      const listsWithDetails = await getUserListsWithTasks(
+        req.user.id as string
+      );
 
       // Render ke frontend
       res.render("index", {
@@ -87,48 +57,9 @@ router.get(
   async (req: Request & { user?: any }, res: Response) => {
     try {
       // Ambil semua lists berdasarkan userId
-      const lists = await prisma.list.findMany({
-        where: {
-          userId: req.user.id,
-        },
-      });
-
-      // Ambil jumlah task per list dengan groupBy (lebih cepat dari Promise.all)
-      const taskCounts = await prisma.task.groupBy({
-        by: ["listId"],
-        _count: { id: true },
-      });
-
-      // Buat mapping dari listId ke jumlah task
-      const taskCountMap = taskCounts.reduce((acc, item) => {
-        acc[item.listId] = item._count.id;
-        return acc;
-      }, {} as Record<number, number>);
-
-      // Ambil semua task berdasarkan listId yang ada
-      const tasks = await prisma.task.findMany({
-        where: {
-          listId: { in: lists.map((list) => list.id) },
-        },
-      });
-
-      // Buat mapping listId ke array task
-      const taskMap = tasks.reduce((acc, task) => {
-        if (!acc[task.listId]) acc[task.listId] = [];
-        acc[task.listId].push(task);
-        return acc;
-      }, {} as Record<number, typeof tasks>);
-
-      // Gabungkan data list dengan jumlah task dan isi task
-      const listsWithDetails = lists.map((list) => ({
-        ...list,
-        taskCount: taskCountMap[list.id] || 0, // Jika tidak ada task, default 0
-        tasks: taskMap[list.id] || [], // Jika tidak ada task, default array kosong
-      }));
-
-      // Urutkan berdasarkan banyaknya task (descending)
-      listsWithDetails.sort((a, b) => b.taskCount - a.taskCount);
-
+      const listsWithDetails = await getUserListsWithTasks(
+        req.user.id as string
+      );
       // Render ke frontend
       res.render("contents/home", {
         lists: listsWithDetails, // Pastikan lists sudah terurut dan berisi task
@@ -143,47 +74,67 @@ router.get(
 router.get("/login", (req: Request, res: Response) => {
   res.render("auth/login");
 });
+router.get("/snackbars", (req: Request, res: Response) => {
+  res.render("components/snackbars");
+});
 router.get("/register", (req: Request, res: Response) => {
   res.render("auth/register", { regUser: {} });
 });
 router.get(
-  "/modaledit/:id",
-  async (req: Request & { user: any }, res: Response) => {
+  "/modaledit/:idlist/:idtask?",
+  async (req: Request & { user?: any }, res: Response): Promise<void> => {
+    const idList = req.params.idlist;
+    const idTask = req.params.idtask;
+
+    if (!idList) {
+      res.status(400).send("Bad Request: Missing list ID");
+      return;
+    }
+
     try {
-      const lists = await prisma.list.findMany({
-        where: { id: req.params.id },
-      });
+      // Ambil semua lists berdasarkan userId
+      const listsWithDetails = await getListWithTasks(idList as string);
 
-      const taskCounts = await prisma.task.groupBy({
-        by: ["listId"],
-        _count: { id: true },
-      });
+      let task = {};
 
-      const taskCountMap = taskCounts.reduce((acc, item) => {
-        acc[item.listId] = item._count.id;
-        return acc;
-      }, {} as Record<number, number>);
+      if (idTask) {
+        // Debugging task search
+        console.log("Looking for task with id:", idTask);
 
-      const tasks = await prisma.task.findMany({
-        where: { listId: { in: lists.map((list) => list.id) } },
-      });
+        // Cari task berdasarkan idTask dari listsWithDetails
+        for (const list of listsWithDetails) {
+          if (Array.isArray(list.tasks)) {
+            // Ensure we're comparing the IDs as trimmed strings
+            task = list.tasks.find((t: any) => {
+              const taskId = String(t.id).trim(); // Trim in case of any extra spaces
+              const idToCompare = String(idTask).trim(); // Trim in case of any extra spaces
 
-      const taskMap = tasks.reduce((acc, task) => {
-        if (!acc[task.listId]) acc[task.listId] = [];
-        acc[task.listId].push(task);
-        return acc;
-      }, {} as Record<number, typeof tasks>);
+              return taskId === idToCompare;
+            });
 
-      const listsWithDetails = lists.map((list) => ({
-        ...list,
-        taskCount: taskCountMap[list.id] || 0,
-        tasks: taskMap[list.id] || [],
-      }));
+            // If task is found, break the loop
+            if (task) break;
+          }
+        }
 
-      listsWithDetails.sort((a, b) => b.taskCount - a.taskCount);
+        if (!task) {
+          setSnackbar(req, "Task not found", "error");
+          return res.redirect("/api/components/snackbars"); // Or show an appropriate message
+        }
+        if (task && (task as any).dueDate) {
+          const dueDate = new Date((task as any).dueDate);
+          const date = dueDate.toISOString().split("T")[0]; // Gets the date part (mm-dd-yyyy)
+          const time = dueDate.toISOString().split("T")[1].split(".")[0]; // Gets the time part (hh:mm:ss)
 
-      // ✅ Render dengan data yang benar
-      res.render("components/modal_edit", { lists: listsWithDetails });
+          // Add date and time to the task object
+          task = { ...(task as any), date, time };
+        }
+      }
+
+      // Separate dueDate into date and time
+
+      // ✅ Render with the correct data
+      res.render("components/modal_edit", { lists: listsWithDetails, task });
     } catch (error) {
       console.error("Error fetching lists:", error);
       res.status(500).send("Internal Server Error");
