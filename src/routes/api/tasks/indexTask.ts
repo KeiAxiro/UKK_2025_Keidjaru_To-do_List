@@ -13,11 +13,11 @@ import { setSnackbar } from "../../../middlewares/snackbars.middleware.js";
 const router = Router();
 
 router.post("/", authenticateJWT("ALL"), async (req, res) => {
-  const { listId, taskName, taskDescription, taskDate, taskTime } = req.body;
+  const { listId, taskName, taskDate, taskTime } = req.body;
   try {
     const dueDate = new Date(`${taskDate}T${taskTime}:00.000Z`);
     const task = await prisma.task.create({
-      data: { listId, title: taskName, description: taskDescription, dueDate },
+      data: { listId, title: taskName, dueDate },
     });
     setSnackbar(req, "Task Created Successfully!", "primary");
     res.redirect("/api/components/root/contents/home");
@@ -47,7 +47,7 @@ router.put("/:id", async (req, res) => {
   try {
     const task = await prisma.task.update({
       where: { id },
-      data: { title, description, isCompleted, dueDate },
+      data: { title, isCompleted, dueDate },
     });
     res.json(task);
   } catch {

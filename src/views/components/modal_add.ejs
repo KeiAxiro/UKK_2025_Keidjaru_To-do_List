@@ -105,10 +105,13 @@
           </i>
         </div>
 
-        <nav>
-          <div class="field label prefix border">
-            <i>calendar_month</i>
-            <input type="date" name="taskDate" required />
+        <fieldset>
+          <legend>Due Time  </legend>
+          <nav>
+
+            <div class="field label prefix border">
+              <i>calendar_month</i>
+              <input type="date" name="taskDate" required />
             <label>Date</label>
           </div>
           <div class="field label prefix border">
@@ -117,11 +120,7 @@
             <label>Time</label>
           </div>
         </nav>
-
-        <div class="field label border textarea">
-          <textarea id="taskDescription" name="taskDescription"></textarea>
-          <label>Description</label>
-        </div>
+        </fieldset>
 
         <footer class="fixed no-padding">
           <nav class="right-align no-space no-padding">

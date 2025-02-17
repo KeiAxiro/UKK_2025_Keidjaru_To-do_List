@@ -141,7 +141,6 @@ model Task {
   id          String    @id @default(uuid())
   listId      String
   title       String    @db.VarChar(50)
-  description String?   @db.Text
   isCompleted Boolean   @default(false)
   dueDate     DateTime? @db.Timestamptz
   createdAt   DateTime  @default(now())
