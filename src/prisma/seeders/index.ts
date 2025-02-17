@@ -69,7 +69,6 @@ async function seed() {
         id: "t1b2c3d4-e5f6-7890-1234-56789abcdef1",
         listId: "a1b2c3d4-e5f6-7890-1234-56789abcdef0",
         title: "Setup Prisma",
-        description: "Install dan konfigurasi Prisma di Express",
         isCompleted: false,
         dueDate: new Date("2024-02-10T12:00:00.000Z"),
         createdAt: new Date("2024-02-09T10:10:00.000Z"),
@@ -79,7 +78,6 @@ async function seed() {
         id: "t2c3d4e5-f678-9012-3456-789abcdef012",
         listId: "a1b2c3d4-e5f6-7890-1234-56789abcdef0",
         title: "Membuat API CRUD",
-        description: "Buat endpoint CRUD untuk task management",
         isCompleted: true,
         dueDate: new Date("2024-02-09T18:00:00.000Z"),
         createdAt: new Date("2024-02-09T10:20:00.000Z"),
@@ -89,7 +87,6 @@ async function seed() {
         id: "t3d4e5f6-7890-1234-5678-9abcdef01234",
         listId: "b2c3d4e5-f678-9012-3456-789abcdef012",
         title: "Revisi Laporan PKL",
-        description: "Perbaiki bagian analisis dan kesimpulan",
         isCompleted: false,
         dueDate: new Date("2024-02-12T15:00:00.000Z"),
         createdAt: new Date("2024-02-08T08:45:00.000Z"),
@@ -101,4 +98,6 @@ async function seed() {
   console.log("✅ Data dummy berhasil ditambahkan!");
 }
 
-seed().catch((e) => console.error(e)).finally(() => prisma.$disconnect());
+seed()
+  .catch((e) => console.error(e))
+  .finally(() => prisma.$disconnect());
