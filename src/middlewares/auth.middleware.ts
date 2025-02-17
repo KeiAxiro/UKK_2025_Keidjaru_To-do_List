@@ -5,7 +5,7 @@ import {
   ErrorRequestHandler,
   RequestHandler,
 } from "express";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import prisma from "../prisma/clients/indexPrisma.js";
 import { setSnackbar, snackbar } from "./snackbars.middleware.js";

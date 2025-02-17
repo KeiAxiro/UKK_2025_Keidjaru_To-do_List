@@ -1,5 +1,5 @@
 import prisma from "../clients/indexPrisma.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 // async function main(): Promise<void> {
 //   console.time("time: ");
