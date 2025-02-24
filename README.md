@@ -1,7 +1,7 @@
 
 # QuickList
 
-This website is a assigment Especially UKK.
+This website is a assigment Especially UKK
 
 ## Tech Stack
 
